@@ -6,7 +6,7 @@ A daily switch puzzle by **crazywaffleguy**.
 
 Website: <https://flipple.live>
 
-Current version: `flipple v0.2.3`
+Current version: `flipple v0.3.0`
 
 GitHub: <https://github.com/crazywaffleguy>
 
@@ -19,6 +19,12 @@ Flipple has two daily modes:
 
 The daily puzzle changes at midnight in `America/New_York`. Each mode has its own deterministic answer, puzzle number, local win counter, and wordle-like share result. A shared local streak counts one completed daily puzzle per Eastern day.
 
+## Soundtrack
+
+Flipple v0.3.0 adds a full in-game soundtrack. The music changes with the current mode and theme, so normal Flipple, Flipple³, light mode, and dark mode each have their own track. When the player switches modes or toggles light/dark mode, the game attempts to crossfade at the same timestamp so the soundtrack feels continuous instead of restarting.
+
+The music is original and handmade by **crazywaffleguy**. All rights to the music are owned by **crazywaffleguy** and the tracks are included only for use inside Flipple.
+
 ## Project structure
 
 ```text
@@ -30,7 +36,8 @@ flipple/
 │   ├── DEPLOYMENT.md         # GitHub to Vercel to Cloudflare walkthrough
 │   ├── DEVELOPMENT.md        # How the code is organized
 │   ├── LAUNCH_CHECKLIST.md   # Local, Vercel, phone, and domain checks
-│   └── PWA_INSTALL.md        # How to install Flipple as a home-screen app
+│   ├── PWA_INSTALL.md        # How to install Flipple as a home-screen app
+│   └── SUPPORT_TICKETS.md    # Mostly unserious log for bugs/confusing player reports
 ├── public/
 │   ├── index.html            # Main page shell and fixed creator/version labels
 │   ├── config.js             # Easy public settings, especially future domain URL
@@ -43,7 +50,8 @@ flipple/
 │       ├── icon-180.png      # Apple home-screen icon
 │       ├── icon-192.png      # PWA icon
 │       ├── icon-512.png      # Large PWA icon
-│       └── preview.png       # Green/yellow-only social thumbnail
+│       ├── preview.png       # Green/yellow-only social thumbnail
+│       └── audio/            # Handmade theme/mode soundtracks
 ├── src/
 │   └── daily.js              # Shared Node daily puzzle generator
 ├── CREDITS.md
@@ -113,7 +121,7 @@ Share rows are based on correctness, not the selected in-game color. Correct pos
 The small lower-left label is controlled by:
 
 ```js
-appVersion: "0.2.1"
+appVersion: "0.3.0"
 ```
 
 in `public/config.js`. Future ZIPs/releases should update that value, `package.json`, and `CHANGELOG.md` together.
@@ -142,7 +150,9 @@ javascript, game, puzzle, wordle, wordle-game, wordle-like, daily, daily-game, w
 - `docs/DEPLOYMENT.md` - step-by-step GitHub, Vercel, and Cloudflare setup.
 - `docs/DEVELOPMENT.md` - how the files work together so future edits stay clean.
 - `docs/LAUNCH_CHECKLIST.md` - quick checks before sending the link around.
-- `CREDITS.md` - creator attribution.
+- `docs/PWA_INSTALL.md` - installing Flipple as a home-screen app.
+- `docs/SUPPORT_TICKETS.md` - early player confusion reports and joke support tickets.
+- `CREDITS.md` - creator attribution and soundtrack ownership note.
 - `LICENSE.md` - all-rights-reserved project license.
 
 ## Notes
@@ -150,5 +160,6 @@ javascript, game, puzzle, wordle, wordle-game, wordle-like, daily, daily-game, w
 - The answer is returned by the API because this version prioritizes fun and shareability over anti-cheat seriousness.
 - Local wins, completed daily results, and the shared streak are saved in the browser with `localStorage`. Practice mode does not add wins or streak days.
 - The social preview image and cubed share result are intentionally green/yellow only.
+- All soundtrack music is original, handmade by crazywaffleguy, and all music rights are retained by crazywaffleguy.
 - Attribution and creator links are included in source headers, `package.json`, `README.md`, `CREDITS.md`, and `LICENSE.md`.
 - Do not judge the app by double-clicking files inside the ZIP preview. Fully unzip the folder, then run `npm run dev` and open `http://localhost:3000`.

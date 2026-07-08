@@ -1,4 +1,4 @@
-const CACHE_NAME = "flipple-v0.2.3-maintenance";
+const CACHE_NAME = "flipple-v0.3.0-menu-audio";
 
 const APP_SHELL = [
   "/",

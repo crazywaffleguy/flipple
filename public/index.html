@@ -22,8 +22,8 @@
   <meta property="og:description" content="A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like Wordle and Connections with the iconic code breaking aspects from beloved board games such as Mastermind. Its a flipping great game if you ask me!" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://flipple.live" />
-  <meta property="og:image" content="https://flipple.live/assets/preview.png?v=0.2.3" />
-  <meta name="twitter:image" content="https://flipple.live/assets/preview.png?v=0.2.3" />
+  <meta property="og:image" content="https://flipple.live/assets/preview.png?v=0.3.0" />
+  <meta name="twitter:image" content="https://flipple.live/assets/preview.png?v=0.3.0" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://flipple.live" />
 
@@ -76,15 +76,34 @@
 
       <div class="after" id="after" aria-live="polite">
         <button class="share" id="share" type="button">share</button>
+        <div class="share-unlock-hint" id="shareHint" hidden>share to unlock practice mode</div>
         <button class="practice-entry" id="practice" type="button" hidden>practice</button>
       </div>
 
-      <div class="streak-line" id="streak" aria-label="local streak">streak - 0</div>
+      <div class="game-foot" aria-label="sound and streak">
+        <button class="sound-toggle" id="sound" type="button" aria-label="mute soundtrack"></button>
+        <div class="streak-line" id="streak" aria-label="local streak">streak - 0</div>
+      </div>
     </main>
+
+    <div class="under-game-icons" aria-label="help and settings">
+      <button class="mini-icon" id="helpButton" type="button" aria-label="open help">?</button>
+      <button class="mini-icon" id="settingsButton" type="button" aria-label="open settings"></button>
+    </div>
+  </div>
+
+
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="close">×</button>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-body" id="modalBody"></div>
+    </section>
   </div>
 
   <a class="creator-link" href="https://linktr.ee/crazywaffleguy" target="_blank" rel="noopener noreferrer">meet the creator</a>
-  <div class="version-label" id="versionLabel" aria-label="Flipple version">flipple v0.2.3</div>
+  <div class="version-label" id="versionLabel" aria-label="Flipple version">flipple v0.3.0</div>
 
   <script src="config.js" defer></script>
   <script src="app.js" defer></script>

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0
+
+- Added the first full Flipple soundtrack system with handmade music by crazywaffleguy throughout the game.
+- Added separate theme and mode soundtracks for normal dark, normal light, Flipple³ dark, and Flipple³ light.
+- Added a speaker control, music volume slider, local audio preferences, looping playback, and short crossfades when switching themes or modes.
+- Added in-game Help and Settings pop-ups with compact visual explanations for icons, turns, modes, scoring, and practice unlocks.
+- Added a daily share prompt before practice unlock.
+- Added quality-of-life polish around post-game clarity, settings access, and first-player confusion.
+- Added a support ticket log for early player confusion reports.
+
 ## 0.2.3
 
 - Added PWA support so Flipple can be installed to a phone home screen.

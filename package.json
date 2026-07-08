@@ -1,6 +1,6 @@
 {
   "name": "flipple",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": true,
   "description": "A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like Wordle and Connections with the iconic code breaking aspects from beloved board games such as Mastermind. Its a flipping great game if you ask me!",
   "type": "commonjs",
@@ -26,7 +26,10 @@
     "web-game",
     "flipple-game",
     "flipple-live",
-    "flipple-wordle"
+    "flipple-wordle",
+    "soundtrack",
+    "html5-game",
+    "pwa"
   ],
   "license": "UNLICENSED",
   "author": {
