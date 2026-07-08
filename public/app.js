@@ -13,7 +13,7 @@
 const PROJECT_CONFIG = window.FLIPPLE_CONFIG || {};
 
 const APP = Object.freeze({
-  version: PROJECT_CONFIG.appVersion || "0.2.0",
+  version: PROJECT_CONFIG.appVersion || "0.2.1",
   length: 5,
   maxGuesses: 6,
   timezone: "America/New_York",
@@ -26,8 +26,8 @@ const APP = Object.freeze({
   share: Object.freeze({
     siteUrl: PROJECT_CONFIG.shareSiteUrl || "",
     bulbs: Object.freeze({ on: "💡", off: "◼️" }),
-    normalColors: Object.freeze(["🟩", "🟨"]),
-    cubedColors: Object.freeze(["🟩", "🟨", "🟨"]),
+    correctColor: "🟩",
+    pendingColor: "🟨",
     missColor: "🟥"
   })
 });
@@ -596,9 +596,10 @@ function shareTitle() {
 }
 
 function shareRow(entry, index) {
-  const colors = isFinalLossRow(index)
-    ? entry.pattern.map((value, position) => shareColorForFinalLoss(value, position)).join("")
-    : entry.pattern.map(shareColorForValue).join("");
+  const finalLoss = isFinalLossRow(index);
+  const colors = entry.pattern
+    .map((value, position) => shareColorForPosition(value, position, finalLoss))
+    .join("");
 
   return `${colors} ${entry.score}/5`;
 }
@@ -607,8 +608,10 @@ function isFinalLossRow(index) {
   return state.over && !state.won && index === state.guesses.length - 1;
 }
 
-function shareColorForFinalLoss(value, position) {
-  return value === state.secret[position] ? APP.share.normalColors[0] : APP.share.missColor;
+function shareColorForPosition(value, position, finalLoss) {
+  const correct = value === state.secret[position];
+  if (correct) return APP.share.correctColor;
+  return finalLoss ? APP.share.missColor : APP.share.pendingColor;
 }
 
 function shareBulbs(used) {
@@ -638,10 +641,6 @@ async function copyShareText(fullText) {
   textarea.remove();
 }
 
-function shareColorForValue(value) {
-  if (isCubed()) return APP.share.cubedColors[value] || APP.share.cubedColors[0];
-  return value === 0 ? APP.share.normalColors[0] : APP.share.normalColors[1];
-}
 
 function resetShareLabel() {
   if (state.shareFlashTimer) {

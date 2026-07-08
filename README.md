@@ -1,10 +1,12 @@
 # Flipple
 
+A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like Wordle and Connections with the iconic code breaking aspects from beloved board games such as Mastermind. Its a flipping great game if you ask me!
+
 A daily switch puzzle by **crazywaffleguy**.
 
 Website: <https://flipple.live>
 
-Current version: `flipple v0.2.0`
+Current version: `flipple v0.2.1`
 
 GitHub: <https://github.com/crazywaffleguy>
 
@@ -12,10 +14,10 @@ Linktree: <https://linktr.ee/crazywaffleguy>
 
 Flipple has two daily modes:
 
-- **flipple** — 5 two-position switches.
-- **flipple³** — 5 three-position propeller dials.
+- **flipple** - 5 two-position switches.
+- **flipple³** - 5 three-position propeller dials.
 
-The daily puzzle changes at midnight in `America/New_York`. Each mode has its own deterministic answer, puzzle number, local win counter, and Wordle-style share result. A shared local streak counts one completed daily puzzle per Eastern day.
+The daily puzzle changes at midnight in `America/New_York`. Each mode has its own deterministic answer, puzzle number, local win counter, and wordle-like share result. A shared local streak counts one completed daily puzzle per Eastern day.
 
 ## Project structure
 
@@ -25,7 +27,7 @@ flipple/
 │   └── daily.js              # Vercel API route: /api/daily?mode=normal|cubed
 ├── docs/
 │   ├── CONFIGURATION.md      # Launch date, share URL, and share color settings
-│   ├── DEPLOYMENT.md         # GitHub → Vercel → Cloudflare walkthrough
+│   ├── DEPLOYMENT.md         # GitHub to Vercel to Cloudflare walkthrough
 │   ├── DEVELOPMENT.md        # How the code is organized
 │   └── LAUNCH_CHECKLIST.md   # Local, Vercel, phone, and domain checks
 ├── public/
@@ -85,27 +87,27 @@ That date is puzzle `#1`. Every Eastern date after that increases the puzzle num
 
 ## Share button
 
-After the game ends, a minimal share button appears near the bottom of the game card. After sharing a daily result, practice mode appears below it. The **share** button uses the phone's native share sheet when available, like Wordle-style games do on iPhone and Android. If native sharing is not available, it copies the result to the clipboard.
+After the game ends, a minimal share button appears near the bottom of the game card. After sharing a daily result, practice mode appears below it. The **share** button uses the phone's native share sheet when available, like other wordle-like games do on iPhone and Android. If native sharing is not available, it copies the result to the clipboard.
 
 Share results use lightbulb emoji for used/unused guesses:
 
 ```text
 flipple #1
-✓ 💡💡💡◼️◼️◼️
+💡💡💡◼️◼️◼️
 
 🟩🟨🟩🟨🟨 2/5
 🟨🟩🟩🟨🟨 3/5
 🟩🟩🟩🟩🟩 5/5
 ```
 
-Flipple³ share rows intentionally use only green/yellow emoji blocks, with no blue, so the third in-game color stays less spoiled in texts and screenshots.
+Share rows are based on correctness, not the selected in-game color. Correct positions are green, unsolved positions are yellow, and missed positions on a losing final row turn red. This keeps Flipple³ share results spoiler-light because the shared grid never reveals the blue dial state.
 
 ## Version label
 
 The small lower-left label is controlled by:
 
 ```js
-appVersion: "0.2.0"
+appVersion: "0.2.1"
 ```
 
 in `public/config.js`. Future ZIPs/releases should update that value, `package.json`, and `CHANGELOG.md` together.
@@ -120,14 +122,22 @@ shareSiteUrl: "https://flipple.live"
 
 That means local testing, Vercel previews, native phone share sheets, and clipboard fallback results all point people to the public domain instead of `localhost` or a temporary preview URL. If the domain ever changes, update `public/config.js`, then commit and push.
 
+## Suggested GitHub topics
+
+Use these in the GitHub repo About panel when you edit the repository details:
+
+```text
+javascript, game, puzzle, wordle, wordle-game, wordle-like, daily, daily-game, web-game, browser-game, flipple, flipple-game, flipple-live, flipple-wordle
+```
+
 ## Documentation included
 
-- `docs/CONFIGURATION.md` — the small settings you are most likely to edit.
-- `docs/DEPLOYMENT.md` — step-by-step GitHub, Vercel, and Cloudflare setup.
-- `docs/DEVELOPMENT.md` — how the files work together so future edits stay clean.
-- `docs/LAUNCH_CHECKLIST.md` — quick checks before sending the link around.
-- `CREDITS.md` — creator attribution.
-- `LICENSE.md` — all-rights-reserved project license.
+- `docs/CONFIGURATION.md` - the small settings you are most likely to edit.
+- `docs/DEPLOYMENT.md` - step-by-step GitHub, Vercel, and Cloudflare setup.
+- `docs/DEVELOPMENT.md` - how the files work together so future edits stay clean.
+- `docs/LAUNCH_CHECKLIST.md` - quick checks before sending the link around.
+- `CREDITS.md` - creator attribution.
+- `LICENSE.md` - all-rights-reserved project license.
 
 ## Notes
 

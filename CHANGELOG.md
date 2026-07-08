@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1
+
+- Changed share rows to show correctness instead of selected colors, including cubed mode.
+- Added red missed-position feedback on the final losing share row.
+- Tuned mobile scaling so the play box sits higher and clears the footer labels better.
+- Spaced the top lightbulb tracker a little wider.
+- Updated the project description and docs around the wordle-like positioning.
+- Added the recommended GitHub topic list to the README and package keywords.
+
 ## 0.2.0
 
 - Established the cleaned pre-deployment build as the v0.2 line.

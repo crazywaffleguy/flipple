@@ -7,7 +7,7 @@ This project is intentionally small. Most things you will want to change live in
 The small lower-left label is set in `public/config.js`:
 
 ```js
-appVersion: "0.2.0"
+appVersion: "0.2.1"
 ```
 
 Update that value for each shipped ZIP/release, and keep it matched with `package.json` and `CHANGELOG.md`.
@@ -39,14 +39,15 @@ The browser fallback uses the matching values in `public/config.js`. If you chan
 
 ## Share result colors
 
-Share colors live in `public/app.js`:
+Share feedback is correctness-based in `public/app.js`:
 
 ```js
-normalColors: ["🟩", "🟨"]
-cubedColors: ["🟩", "🟨", "🟨"]
+correctColor: "🟩"
+pendingColor: "🟨"
+missColor: "🟥"
 ```
 
-Cubed mode intentionally uses only green/yellow in share results so the third in-game color is not spoiled in texts or screenshots.
+Correct positions are green. Unsolved positions are yellow. If the player loses on the final guess, incorrect positions in that last row turn red. This keeps cubed share results spoiler-light because the shared colors do not reveal the selected in-game dial colors.
 
 ## Share result bulbs
 

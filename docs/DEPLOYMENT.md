@@ -17,7 +17,7 @@ flipple-project
 Install VS Code if you do not already have it. Open VS Code, then choose:
 
 ```text
-File → Open Folder → flipple-project
+File > Open Folder > flipple-project
 ```
 
 ## 3. Install Node.js
@@ -27,7 +27,7 @@ Install Node.js 18 or newer from the official Node website if you do not already
 Then open VS Code's terminal:
 
 ```text
-Terminal → New Terminal
+Terminal > New Terminal
 ```
 
 Run:

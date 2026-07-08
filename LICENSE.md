@@ -1,4 +1,4 @@
-# Proprietary License — All Rights Reserved
+# Proprietary License - All Rights Reserved
 
 Copyright © 2026 crazywaffleguy.
 

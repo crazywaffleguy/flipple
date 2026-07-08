@@ -38,7 +38,7 @@ The page uses:
 
 ## Share behavior
 
-The share button tries `navigator.share()` first. On iPhone and Android, this opens the native share sheet. The score text and `flipple.live` link are sent together as one text payload so apps do not drop the score grid and share only the URL. If native sharing is unavailable, the same full result is copied with the Clipboard API, with an older textarea fallback.
+The share button uses the native share sheet on likely mobile and tablet devices. Desktop browsers copy the full result to the clipboard because desktop share panels can drop the score grid. The score text and `flipple.live` link stay together as one payload. Shared rows are correctness-based: green for correct positions, yellow for unsolved positions, and red for missed positions on a losing final row.
 
 ## Attribution
 
