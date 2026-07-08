@@ -26,9 +26,7 @@
     "web-game",
     "flipple-game",
     "flipple-live",
-    "flipple-wordle",
-    "pwa",
-    "progressive-web-app"
+    "flipple-wordle"
   ],
   "license": "UNLICENSED",
   "author": {

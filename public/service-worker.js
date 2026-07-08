@@ -42,10 +42,7 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
 
-  // Leave ads, analytics, fonts, and other third-party requests alone.
-  if (url.origin !== self.location.origin) return;
-
-  // Do not cache daily API responses, or the daily puzzle could get stale.
+  // Daily puzzle responses should stay fresh, not cached by the PWA shell.
   if (url.pathname.startsWith("/api/")) {
     event.respondWith(fetch(request));
     return;

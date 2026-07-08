@@ -22,15 +22,14 @@
   <meta property="og:description" content="A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like Wordle and Connections with the iconic code breaking aspects from beloved board games such as Mastermind. Its a flipping great game if you ask me!" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://flipple.live" />
-  <meta property="og:image" content="https://flipple.live/assets/preview.png?v=0.2.2" />
-  <meta name="twitter:image" content="https://flipple.live/assets/preview.png?v=0.2.2" />
+  <meta property="og:image" content="https://flipple.live/assets/preview.png?v=0.2.3" />
+  <meta name="twitter:image" content="https://flipple.live/assets/preview.png?v=0.2.3" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://flipple.live" />
 
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/assets/icon-180.png" />
-  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Flipple" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -92,7 +91,9 @@
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/service-worker.js");
+        navigator.serviceWorker.register("/service-worker.js").catch(() => {
+          // PWA registration is optional; the game still works if it fails.
+        });
       });
     }
   </script>
