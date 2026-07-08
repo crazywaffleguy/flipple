@@ -6,7 +6,7 @@ A daily switch puzzle by **crazywaffleguy**.
 
 Website: <https://flipple.live>
 
-Current version: `flipple v0.2.2`
+Current version: `flipple v0.2.3`
 
 GitHub: <https://github.com/crazywaffleguy>
 
@@ -31,12 +31,17 @@ flipple/
 │   ├── DEVELOPMENT.md        # How the code is organized
 │   └── LAUNCH_CHECKLIST.md   # Local, Vercel, phone, and domain checks
 ├── public/
-│   ├── index.html            # Main page shell and fixed creator/version labels
+│   ├── index.html            # Main page shell, metadata, and PWA registration
 │   ├── config.js             # Easy public settings, especially future domain URL
 │   ├── styles.css            # Visual style and responsive layout
 │   ├── app.js                # Browser game, local stats, and share flow
+│   ├── manifest.webmanifest  # Home-screen install metadata
+│   ├── service-worker.js     # Offline app shell cache, without caching daily API answers
 │   └── assets/
 │       ├── favicon.svg
+│       ├── icon-180.png      # Apple home-screen icon
+│       ├── icon-192.png      # PWA icon
+│       ├── icon-512.png      # Large PWA icon
 │       └── preview.png       # Green/yellow-only social thumbnail
 ├── src/
 │   └── daily.js              # Shared Node daily puzzle generator
@@ -68,6 +73,23 @@ Check the daily API directly:
 http://localhost:3000/api/daily?mode=normal
 http://localhost:3000/api/daily?mode=cubed
 ```
+
+
+## Install as an app
+
+Flipple includes basic Progressive Web App support. On iPhone, open `https://flipple.live` in Safari, tap the share button, then choose **Add to Home Screen**. On Android or desktop Chrome, use the browser's install option when it appears.
+
+The PWA files are:
+
+```text
+public/manifest.webmanifest
+public/service-worker.js
+public/assets/icon-180.png
+public/assets/icon-192.png
+public/assets/icon-512.png
+```
+
+The service worker caches the app shell so the site can reopen like an app, but it intentionally does not cache `/api/daily` responses so daily puzzles do not get stuck on an old answer.
 
 ## Daily puzzle behavior
 
@@ -107,7 +129,7 @@ Share rows are based on correctness, not the selected in-game color. Correct pos
 The small lower-left label is controlled by:
 
 ```js
-appVersion: "0.2.1"
+appVersion: "0.2.3"
 ```
 
 in `public/config.js`. Future ZIPs/releases should update that value, `package.json`, and `CHANGELOG.md` together.
@@ -141,6 +163,7 @@ javascript, game, puzzle, wordle, wordle-game, wordle-like, daily, daily-game, w
 
 ## Notes
 
+- Flipple can be installed to a phone home screen as a PWA. The app shell is cached, but daily answers still come from the live API.
 - The answer is returned by the API because this version prioritizes fun and shareability over anti-cheat seriousness.
 - Local wins, completed daily results, and the shared streak are saved in the browser with `localStorage`. Practice mode does not add wins or streak days.
 - The social preview image and cubed share result are intentionally green/yellow only.

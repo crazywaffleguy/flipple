@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3
+
+- Added PWA support so Flipple can be installed to a phone home screen.
+- Added a web app manifest, service worker, and generated app icons from the current favicon artwork.
+- Cached the app shell while intentionally leaving daily API responses uncached so daily puzzles do not get stuck.
+- Updated the visible app version and package metadata to v0.2.3.
+
 ## 0.2.2
 
 - Changed the preview png to something that actually looks nice and matches the game font.
