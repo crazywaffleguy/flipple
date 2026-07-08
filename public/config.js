@@ -10,7 +10,7 @@
 
 window.FLIPPLE_CONFIG = Object.freeze({
   // Visible version label. Update this once per shipped ZIP/release.
-  appVersion: "0.2.1",
+  appVersion: "0.2.2",
 
   // Permanent public website URL used in native share sheets and clipboard results.
   // During local development, shares still point to the live domain on purpose.
