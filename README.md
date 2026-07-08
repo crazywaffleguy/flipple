@@ -6,7 +6,7 @@ A daily switch puzzle by **crazywaffleguy**.
 
 Website: <https://flipple.live>
 
-Current version: `flipple v0.2.1`
+Current version: `flipple v0.2.2`
 
 GitHub: <https://github.com/crazywaffleguy>
 

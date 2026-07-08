@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+
+- Changed the preview icon to something that actually looks nice and matches the game font
+
 ## 0.2.1
 
 - Changed share rows to show correctness instead of selected colors, including cubed mode.
