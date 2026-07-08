@@ -1,0 +1,35 @@
+{
+  "name": "flipple",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A daily switch puzzle web game by crazywaffleguy with normal and cubed modes.",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "daily-puzzle",
+    "wordle-like",
+    "browser-game",
+    "flipple"
+  ],
+  "license": "UNLICENSED",
+  "author": {
+    "name": "crazywaffleguy",
+    "url": "https://linktr.ee/crazywaffleguy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crazywaffleguy/flipple.git"
+  },
+  "homepage": "https://flipple.live",
+  "links": {
+    "website": "https://flipple.live",
+    "github": "https://github.com/crazywaffleguy",
+    "linktree": "https://linktr.ee/crazywaffleguy"
+  }
+}

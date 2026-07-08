@@ -1,0 +1,697 @@
+/*
+  Flipple styles
+  --------------
+  Creator: crazywaffleguy
+  GitHub:  https://github.com/crazywaffleguy
+  Linktree: https://linktr.ee/crazywaffleguy
+
+  Minimal, tactile, mobile-first UI. The board is intentionally visual-first so
+  the game is readable even before someone knows the rules.
+*/
+
+:root {
+  color-scheme: dark light;
+  --ease: 170ms ease;
+  --spin-ease: 220ms cubic-bezier(.35, .02, .2, 1);
+  --slide-ease: 620ms cubic-bezier(.18, .82, .18, 1);
+  --tap: clamp(48px, 11vw, 64px);
+  --font-main: "Arial Narrow", "Liberation Sans Narrow", "Helvetica Neue", "Avenir Next", "Inter", Arial, sans-serif;
+  --text-weight: 300;
+  --title-weight: 300;
+  --control-weight: 400;
+  --ui-size: .98rem;
+  --result-size: 1.38rem;
+}
+
+body[data-theme="dark"] {
+  --paper: #2f2b24;
+  --panel: #3a342b;
+  --ink: #eee0c9;
+  --muted: #b8a992;
+
+  --green: #9ca884;
+  --green-bar: #d2d7ae;
+  --blue: #879fb0;
+  --mustard: #b8a05f;
+  --mustard-bar: #d6bf74;
+
+  --win: #a9b489;
+  --lose: #b56f68;
+  --bulb-on: #efe0bd;
+  --bulb-off: #5a5041;
+  --bulb-base: #8e826e;
+}
+
+body[data-theme="light"] {
+  --paper: #ede3d4;
+  --panel: #f8efe1;
+  --ink: #2f2b24;
+  --muted: #706555;
+
+  --green: #657a52;
+  --green-bar: #405437;
+  --blue: #5b7280;
+  --mustard: #a27f33;
+  --mustard-bar: #755820;
+
+  --win: #657a52;
+  --lose: #9b5b54;
+  --bulb-on: #40392e;
+  --bulb-off: #cbbca7;
+  --bulb-base: #857765;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--ease),
+    background var(--ease),
+    color var(--ease),
+    opacity var(--ease),
+    transform var(--ease),
+    fill var(--ease),
+    stroke var(--ease);
+}
+
+html {
+  min-height: 100%;
+  touch-action: manipulation;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-main);
+  font-weight: var(--text-weight);
+  letter-spacing: .035em;
+  display: grid;
+  place-items: center;
+  padding: max(18px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  user-select: none;
+}
+
+.wrap {
+  width: min(430px, 100%);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: clamp(16px, 5vw, 22px);
+  padding: 0 3px;
+}
+
+.title-wrap {
+  position: relative;
+  width: fit-content;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.9rem, 15vw, 4.9rem);
+  line-height: .86;
+  font-weight: var(--title-weight);
+  letter-spacing: -.045em;
+  text-transform: lowercase;
+  position: relative;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+
+.cube {
+  position: absolute;
+  right: -.34em;
+  top: -.33em;
+  font: inherit;
+  font-size: .37em;
+  font-weight: var(--title-weight);
+  letter-spacing: -.04em;
+  opacity: 0;
+  transform: translate(-4px, 6px);
+  transition: opacity 260ms ease, transform 260ms ease, color var(--ease);
+  pointer-events: none;
+  color: var(--ink);
+}
+
+body[data-hard="true"] .cube {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.top {
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+
+.icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.icon {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  opacity: .58;
+  width: var(--tap);
+  height: var(--tap);
+  display: grid;
+  place-items: center;
+  font-size: 1.05rem;
+  line-height: 1;
+  font-weight: var(--control-weight);
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon:active,
+.icon:hover,
+.icon.on {
+  color: var(--ink);
+  opacity: 1;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+.mode-text {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: var(--control-weight);
+  letter-spacing: .02em;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: square;
+}
+
+.tries {
+  display: grid;
+  grid-template-columns: repeat(6, 14px);
+  gap: 5px;
+  height: 22px;
+  align-items: center;
+  justify-content: end;
+}
+
+.bulb {
+  width: 14px;
+  height: 22px;
+  display: block;
+  overflow: visible;
+  color: var(--bulb-on);
+}
+
+.bulb .glass { fill: var(--bulb-on); }
+.bulb .neck, .bulb .base { fill: var(--bulb-base); }
+
+.bulb.off {
+  opacity: .65;
+  color: var(--bulb-off);
+}
+
+.bulb.off .glass { fill: var(--bulb-off); }
+.bulb.off .neck, .bulb.off .base { fill: color-mix(in srgb, var(--bulb-base) 55%, var(--bulb-off)); }
+
+.game {
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  padding: clamp(14px, 4vw, 18px);
+  overflow: hidden;
+  transition: background 520ms ease, color var(--ease), opacity var(--ease);
+}
+
+.game.end-win {
+  background: color-mix(in srgb, var(--green) 36%, var(--panel));
+}
+
+.game.end-lose {
+  background: color-mix(in srgb, var(--lose) 44%, var(--panel));
+}
+
+.game.end-win .action,
+.game.end-win .share,
+.game.end-win .practice-entry {
+  background: color-mix(in srgb, var(--win) 28%, var(--panel));
+}
+
+.game.end-lose .action,
+.game.end-lose .share,
+.game.end-lose .practice-entry {
+  background: color-mix(in srgb, var(--lose) 38%, var(--panel));
+}
+
+.game.end-win .check { background: color-mix(in srgb, var(--win) 36%, var(--panel)); }
+.game.end-lose .check { background: color-mix(in srgb, var(--lose) 44%, var(--panel)); }
+
+.game.end-win .check:disabled,
+.game.end-lose .check:disabled {
+  opacity: .92;
+}
+
+/* Local progress row: wins on the left, daily/practice state on the right. */
+.meta-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 1.2em;
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: var(--ui-size);
+  font-weight: var(--control-weight);
+  font-variant-numeric: tabular-nums;
+}
+
+.win-meta,
+.daily-meta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.2em;
+}
+
+.win-meta {
+  gap: 5px;
+  justify-self: start;
+}
+
+.daily-meta {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  justify-self: end;
+  min-height: 28px;
+  padding: 0;
+  text-align: right;
+  cursor: default;
+}
+
+.daily-meta.is-return {
+  cursor: pointer;
+  opacity: .82;
+}
+
+.daily-meta.is-return:hover,
+.daily-meta.is-return:active {
+  opacity: 1;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+}
+
+
+.crown-icon {
+  width: 18px;
+  height: 15px;
+  display: block;
+  fill: currentColor;
+}
+
+/* Main controls: binary switches in normal mode, rotating dials in cubed mode. */
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(7px, 2vw, 9px);
+  margin-bottom: 15px;
+  will-change: transform, opacity;
+}
+
+.board.from-right { animation: slideFromRight var(--slide-ease) both; }
+.board.from-left { animation: slideFromLeft var(--slide-ease) both; }
+
+@keyframes slideFromRight {
+  from { opacity: 0; transform: translateX(72px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideFromLeft {
+  from { opacity: 0; transform: translateX(-72px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.switch,
+.dial {
+  appearance: none;
+  border: 0;
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  height: clamp(82px, 22vw, 92px);
+  min-width: 0;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.switch .slot {
+  width: clamp(5px, 1.35vw, 7px);
+  height: clamp(52px, 14vw, 58px);
+  background: color-mix(in srgb, var(--green) 88%, var(--panel));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.switch .slot::after {
+  content: "";
+  width: 29px;
+  height: 10px;
+  background: var(--green-bar);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 17px);
+  transform: translateX(-50%);
+  transition: bottom var(--spin-ease), background var(--ease), opacity var(--ease);
+}
+
+.switch[data-state="1"] {
+  background: color-mix(in srgb, var(--mustard) 18%, transparent);
+}
+
+.switch[data-state="1"] .slot {
+  background: color-mix(in srgb, var(--mustard) 70%, var(--panel));
+}
+
+.switch[data-state="1"] .slot::after {
+  bottom: 7px;
+  background: var(--mustard-bar);
+}
+
+.dial {
+  overflow: hidden;
+  --spin: 0deg;
+  --contact: var(--green);
+}
+
+.dial::after {
+  content: "";
+  width: 31px;
+  height: 10px;
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  background: var(--contact);
+}
+
+.wheel {
+  width: clamp(58px, 16vw, 64px);
+  height: clamp(58px, 16vw, 64px);
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%) rotate(var(--spin));
+  overflow: visible;
+  transition: transform var(--spin-ease), fill var(--ease), stroke var(--ease);
+}
+
+.spoke {
+  stroke-width: 11;
+  stroke-linecap: square;
+}
+
+.spoke.green { stroke: var(--green); }
+.spoke.blue { stroke: var(--blue); }
+.spoke.mustard { stroke: var(--mustard); }
+.hub { fill: color-mix(in srgb, var(--panel) 88%, var(--ink)); }
+
+.dial[data-state="0"] {
+  --contact: var(--green);
+  background: color-mix(in srgb, var(--green) 10%, transparent);
+}
+
+.dial[data-state="1"] {
+  --contact: var(--blue);
+  background: color-mix(in srgb, var(--blue) 13%, transparent);
+}
+
+.dial[data-state="2"] {
+  --contact: var(--mustard);
+  background: color-mix(in srgb, var(--mustard) 13%, transparent);
+}
+
+/* Action tray: daily has one full-width submit; practice adds a reset button. */
+.actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.game[data-actions="practice"] .actions {
+  grid-template-columns: 1fr auto;
+}
+
+.action,
+.share,
+.practice-entry {
+  appearance: none;
+  border: 0;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  color: var(--ink);
+  min-height: var(--tap);
+  font-size: 1.35rem;
+  font-weight: var(--control-weight);
+  cursor: pointer;
+  padding: 0 14px;
+  display: grid;
+  place-items: center;
+  transform: translateY(0);
+}
+
+.action[hidden],
+.practice-entry[hidden] {
+  display: none;
+}
+
+.action:disabled {
+  opacity: .38;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .action:not(:disabled):hover,
+  .share:hover,
+  .practice-entry:hover {
+    background: color-mix(in srgb, var(--ink) 9%, var(--panel));
+  }
+
+  .game.end-win .action:not(:disabled):hover,
+  .game.end-win .share:hover,
+  .game.end-win .practice-entry:hover {
+    background: color-mix(in srgb, var(--win) 36%, var(--panel));
+  }
+
+  .game.end-lose .action:not(:disabled):hover,
+  .game.end-lose .share:hover,
+  .game.end-lose .practice-entry:hover {
+    background: color-mix(in srgb, var(--lose) 48%, var(--panel));
+  }
+}
+
+.action:not(:disabled):active,
+.share:active,
+.practice-entry:active {
+  transform: translateY(1px);
+  background: color-mix(in srgb, var(--ink) 13%, var(--panel));
+}
+
+.game.end-win .action:not(:disabled):active,
+.game.end-win .share:active,
+.game.end-win .practice-entry:active {
+  background: color-mix(in srgb, var(--win) 42%, var(--panel));
+}
+
+.game.end-lose .action:not(:disabled):active,
+.game.end-lose .share:active,
+.game.end-lose .practice-entry:active {
+  background: color-mix(in srgb, var(--lose) 54%, var(--panel));
+}
+
+.check { background: color-mix(in srgb, var(--win) 24%, transparent); }
+.check svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2.15;
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.reset { width: 58px; }
+
+.result {
+  display: none;
+  min-height: 30px;
+  place-items: center;
+  color: var(--ink);
+  font-size: var(--result-size);
+  font-weight: var(--control-weight);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+
+.result.show { display: grid; }
+.result.win { color: color-mix(in srgb, var(--win) 65%, var(--ink)); }
+.result.lose { color: color-mix(in srgb, var(--lose) 62%, var(--ink)); }
+
+
+/* Post-game tray: share appears at finish; practice appears after the first share. */
+.after {
+  display: none;
+  gap: 7px;
+  margin-top: 16px;
+  padding-top: 3px;
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+.after.show {
+  display: grid;
+  grid-template-columns: 1fr;
+  animation: shareTrayIn 260ms ease both;
+}
+
+.after.with-practice {
+  grid-template-columns: 1fr;
+}
+
+@keyframes shareTrayIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.share,
+.practice-entry {
+  min-height: 46px;
+  font-size: var(--result-size);
+  font-weight: var(--control-weight);
+  line-height: 1;
+  text-transform: lowercase;
+}
+
+.share {
+  background: color-mix(in srgb, var(--win) 20%, var(--panel));
+}
+
+.practice-entry {
+  background: color-mix(in srgb, var(--ink) 7%, var(--panel));
+}
+
+.history {
+  display: grid;
+  gap: 7px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 46px 1fr 46px;
+  gap: 10px;
+  align-items: center;
+  padding-top: 7px;
+}
+
+.row + .row { margin-top: 1px; }
+
+.row-spacer {
+  min-width: 0;
+}
+
+
+.mini {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.bit {
+  height: 22px;
+  background: var(--green);
+}
+
+.bit[data-color="1"] { background: var(--blue); }
+.bit[data-color="2"] { background: var(--mustard); }
+
+.score {
+  color: var(--ink);
+  opacity: .72;
+  text-align: right;
+  font-size: var(--ui-size);
+  font-weight: var(--control-weight);
+  font-variant-numeric: tabular-nums;
+}
+
+.secret {
+  margin-top: 15px;
+  padding-top: 1px;
+  display: none;
+}
+
+.secret.show { display: block; }
+.secret .mini { gap: 7px; }
+.secret .bit { height: 30px; }
+
+.streak-line {
+  margin-top: 14px;
+  color: var(--ink);
+  opacity: .34;
+  font-size: var(--ui-size);
+  font-weight: var(--text-weight);
+  text-transform: lowercase;
+  letter-spacing: .035em;
+  text-align: right;
+}
+
+.creator-link,
+.version-label {
+  position: fixed;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  color: var(--ink);
+  opacity: .34;
+  font-size: var(--ui-size);
+  font-weight: var(--text-weight);
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: .035em;
+}
+
+.creator-link {
+  right: max(16px, env(safe-area-inset-right));
+}
+
+.version-label {
+  left: max(16px, env(safe-area-inset-left));
+  pointer-events: none;
+}
+
+.creator-link:hover,
+.creator-link:active {
+  opacity: .58;
+}
+
+@media (max-width: 380px) {
+  .header { gap: 10px; }
+  .icons { gap: 5px; }
+  .tries { grid-template-columns: repeat(6, 13px); gap: 4px; }
+  .bulb { width: 13px; height: 20px; }
+  .row { grid-template-columns: 42px 1fr 42px; }
+  .meta-row { font-size: .9rem; }
+}
