@@ -2,7 +2,8 @@
 
 ## 0.2.2
 
-- Changed the preview icon to something that actually looks nice and matches the game font
+- Changed the preview png to something that actually looks nice and matches the game font.
+- Changed the favacon to be symmetrical between both of the sliders.
 
 ## 0.2.1
 
