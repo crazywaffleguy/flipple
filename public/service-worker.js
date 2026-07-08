@@ -1,4 +1,4 @@
-const CACHE_NAME = "flipple-v0.2.3";
+const CACHE_NAME = "flipple-v0.2.3-maintenance";
 
 const APP_SHELL = [
   "/",
@@ -10,7 +10,8 @@ const APP_SHELL = [
   "/assets/favicon.svg",
   "/assets/icon-180.png",
   "/assets/icon-192.png",
-  "/assets/icon-512.png"
+  "/assets/icon-512.png",
+  "/assets/casual-unsuspecting-maintenance.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -42,7 +43,10 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
 
-  // Daily puzzle responses should stay fresh, not cached by the PWA shell.
+  // Leave ads, analytics, fonts, and other third-party requests alone.
+  if (url.origin !== self.location.origin) return;
+
+  // Do not cache daily API responses, or the daily puzzle could get stale.
   if (url.pathname.startsWith("/api/")) {
     event.respondWith(fetch(request));
     return;

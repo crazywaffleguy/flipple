@@ -37,6 +37,14 @@ const STORAGE = Object.freeze({
   stats: "flipple-stats-v2"
 });
 
+const MAINTENANCE_EASTER_EGG = Object.freeze({
+  tapGoal: 10,
+  resetDelay: 1800,
+  riseDelay: 720,
+  holdDelay: 1500,
+  asset: "/assets/casual-unsuspecting-maintenance.png"
+});
+
 const $ = (id) => document.getElementById(id);
 
 const els = Object.freeze({
@@ -72,7 +80,11 @@ const state = {
   won: false,
   shared: false,
   shareFlashTimer: null,
-  slide: ""
+  slide: "",
+  themeTapCount: 0,
+  themeTapTimer: null,
+  maintenanceTimer: null,
+  maintenanceActive: false
 };
 
 function loadSettings() {
@@ -676,9 +688,71 @@ async function toggleMode() {
 }
 
 function toggleTheme() {
+  trackMaintenanceTap();
   state.settings.theme = state.settings.theme === "dark" ? "light" : "dark";
   saveSettings();
   render();
+}
+
+function trackMaintenanceTap() {
+  if (state.maintenanceActive) return;
+
+  state.themeTapCount += 1;
+
+  if (state.themeTapTimer) clearTimeout(state.themeTapTimer);
+  state.themeTapTimer = setTimeout(resetMaintenanceTapChain, MAINTENANCE_EASTER_EGG.resetDelay);
+
+  if (state.themeTapCount >= MAINTENANCE_EASTER_EGG.tapGoal) {
+    resetMaintenanceTapChain();
+    showMaintenanceEasterEgg();
+  }
+}
+
+function resetMaintenanceTapChain() {
+  state.themeTapCount = 0;
+
+  if (state.themeTapTimer) {
+    clearTimeout(state.themeTapTimer);
+    state.themeTapTimer = null;
+  }
+}
+
+function showMaintenanceEasterEgg() {
+  const existing = document.querySelector(".maintenance-egg");
+  if (existing) existing.remove();
+
+  if (state.maintenanceTimer) {
+    clearTimeout(state.maintenanceTimer);
+    state.maintenanceTimer = null;
+  }
+
+  state.maintenanceActive = true;
+
+  const holder = document.createElement("div");
+  holder.className = "maintenance-egg";
+  holder.setAttribute("aria-hidden", "true");
+
+  const image = document.createElement("img");
+  image.src = MAINTENANCE_EASTER_EGG.asset;
+  image.alt = "";
+  image.decoding = "async";
+
+  holder.appendChild(image);
+  document.body.appendChild(holder);
+
+  requestAnimationFrame(() => {
+    holder.classList.add("is-rising");
+  });
+
+  state.maintenanceTimer = setTimeout(() => {
+    holder.classList.add("is-dissipating");
+
+    holder.addEventListener("animationend", () => {
+      holder.remove();
+      state.maintenanceActive = false;
+      state.maintenanceTimer = null;
+    }, { once: true });
+  }, MAINTENANCE_EASTER_EGG.riseDelay + MAINTENANCE_EASTER_EGG.holdDelay);
 }
 
 function randomPattern() {
