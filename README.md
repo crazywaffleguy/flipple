@@ -6,11 +6,7 @@ A daily switch puzzle by **crazywaffleguy**.
 
 Website: <https://flipple.live>
 
-<<<<<<< HEAD
-Current version: `flipple v0.3.0`
-=======
-Current version: `flipple v0.3.1`
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
+Current version: `flipple v0.3.2`
 
 GitHub: <https://github.com/crazywaffleguy>
 
@@ -23,19 +19,13 @@ flipple has two daily modes:
 
 The daily puzzle changes at midnight in `America/New_York`. Each mode has its own deterministic answer, puzzle number, local win counter, and wordle-like share result. A shared local streak counts one completed daily puzzle per Eastern day.
 
-<<<<<<< HEAD
-## Soundtrack
+flipple³ also has a slightly colder, bluer palette in both light and dark themes so the cubed mode feels more like its own icy/glitchy variant while keeping the switch colors readable.
 
-Flipple v0.3.0 adds a full in-game soundtrack. The music changes with the current mode and theme, so normal Flipple, Flipple³, light mode, and dark mode each have their own track. When the player switches modes or toggles light/dark mode, the game attempts to crossfade at the same timestamp so the soundtrack feels continuous instead of restarting.
-
-The music is original and handmade by **crazywaffleguy**. All rights to the music are owned by **crazywaffleguy** and the tracks are included only for use inside Flipple.
-=======
 ## soundtrack
 
-flipple v0.3.1 keeps the full in-game soundtrack and refines the crossfade/loop behavior. The music changes with the current mode and theme, so normal flipple, flipple³, light mode, and dark mode each have their own track. When the player switches modes or toggles light/dark mode, the game attempts to crossfade at the same timestamp so the soundtrack feels continuous instead of restarting.
+flipple v0.3.2 keeps the full in-game soundtrack, updates the loop-clean soundtrack files, and refines the crossfade behavior. The music changes with the current mode and theme, so normal flipple, flipple³, light mode, and dark mode each have their own track. When the player switches modes or toggles light/dark mode, the game attempts to crossfade at the same timestamp so the soundtrack feels continuous instead of restarting.
 
-The music is original and handmade by **crazywaffleguy**. All rights to the music are owned by **crazywaffleguy** and the tracks are included only for use inside flipple.
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
+The music is original and handmade by **Aiden Cullen**. All rights to the music are owned by **Aiden Cullen** and the tracks are included only for use inside flipple.
 
 ## Project structure
 
@@ -48,11 +38,7 @@ flipple/
 │   ├── DEPLOYMENT.md         # GitHub to Vercel to Cloudflare walkthrough
 │   ├── DEVELOPMENT.md        # How the code is organized
 │   ├── LAUNCH_CHECKLIST.md   # Local, Vercel, phone, and domain checks
-<<<<<<< HEAD
-│   ├── PWA_INSTALL.md        # How to install Flipple as a home-screen app
-=======
 │   ├── PWA_INSTALL.md        # How to install flipple as a home-screen app
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 │   └── SUPPORT_TICKETS.md    # Mostly unserious log for bugs/confusing player reports
 ├── public/
 │   ├── index.html            # Main page shell and fixed creator/version labels
@@ -137,11 +123,7 @@ Share rows are based on correctness, not the selected in-game color. Correct pos
 The small lower-left label is controlled by:
 
 ```js
-<<<<<<< HEAD
-appVersion: "0.3.0"
-=======
-appVersion: "0.3.1"
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
+appVersion: "0.3.2"
 ```
 
 in `public/config.js`. Future ZIPs/releases should update that value, `package.json`, and `CHANGELOG.md` together.
@@ -170,11 +152,7 @@ javascript, game, puzzle, wordle, wordle-game, wordle-like, daily, daily-game, w
 - `docs/DEPLOYMENT.md` - step-by-step GitHub, Vercel, and Cloudflare setup.
 - `docs/DEVELOPMENT.md` - how the files work together so future edits stay clean.
 - `docs/LAUNCH_CHECKLIST.md` - quick checks before sending the link around.
-<<<<<<< HEAD
-- `docs/PWA_INSTALL.md` - installing Flipple as a home-screen app.
-=======
 - `docs/PWA_INSTALL.md` - installing flipple as a home-screen app.
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 - `docs/SUPPORT_TICKETS.md` - early player confusion reports and joke support tickets.
 - `CREDITS.md` - creator attribution and soundtrack ownership note.
 - `LICENSE.md` - all-rights-reserved project license.

@@ -61,6 +61,44 @@ body[data-theme="light"] {
   --bulb-base: #857765;
 }
 
+body[data-hard="true"][data-theme="dark"] {
+  --paper: #263038;
+  --panel: #303a42;
+  --ink: #e6edf0;
+  --muted: #adc0c9;
+
+  --green: #8fa996;
+  --green-bar: #c2d3ca;
+  --blue: #86a9c0;
+  --mustard: #b2a978;
+  --mustard-bar: #d0c58f;
+
+  --win: #8fb2a4;
+  --lose: #9b707c;
+  --bulb-on: #ddeef5;
+  --bulb-off: #536371;
+  --bulb-base: #869aa5;
+}
+
+body[data-hard="true"][data-theme="light"] {
+  --paper: #dfe8eb;
+  --panel: #f0f5f3;
+  --ink: #29343a;
+  --muted: #657783;
+
+  --green: #5f806f;
+  --green-bar: #365b4e;
+  --blue: #527891;
+  --mustard: #a6904f;
+  --mustard-bar: #78662d;
+
+  --win: #557f77;
+  --lose: #945e70;
+  --bulb-on: #29343a;
+  --bulb-off: #b8c6ca;
+  --bulb-base: #778a93;
+}
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -861,31 +899,15 @@ body[data-hard="true"] .cube {
   height: 18px;
 }
 
-<<<<<<< HEAD
-.mini-mode {
-  background: color-mix(in srgb, var(--ink) 7%, transparent);
-  color: var(--ink);
-  opacity: .72;
-  font-size: .82rem;
-  font-weight: var(--control-weight);
-}
-
-.bulb-pair {
-  display: flex;
-  gap: 4px;
-=======
 .help-theme-pair,
 .help-mode-pair,
 .bulb-pair {
   display: flex;
   gap: 6px;
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   align-items: center;
   justify-content: center;
 }
 
-<<<<<<< HEAD
-=======
 .help-theme-pair,
 .help-mode-pair {
   color: var(--ink);
@@ -926,7 +948,6 @@ body[data-hard="true"] .cube {
   height: 18px;
 }
 
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 .bulb-pair .bulb {
   width: 12px;
   height: 18px;
@@ -956,64 +977,6 @@ body[data-hard="true"] .cube {
   font-weight: var(--control-weight);
 }
 
-<<<<<<< HEAD
-.help-switch {
-  width: 34px;
-  height: 34px;
-  display: block;
-  position: relative;
-  background: color-mix(in srgb, var(--green) 10%, transparent);
-  justify-self: center;
-}
-
-.help-switch::before {
-  content: "";
-  position: absolute;
-  width: 5px;
-  height: 24px;
-  left: 50%;
-  top: 5px;
-  transform: translateX(-50%);
-  background: color-mix(in srgb, var(--green) 88%, var(--panel));
-}
-
-.help-switch::after {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 7px;
-  left: 50%;
-  bottom: 19px;
-  transform: translateX(-50%);
-  background: var(--green-bar);
-}
-
-.help-dial {
-  width: 40px;
-  height: 40px;
-  display: block;
-  position: relative;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--ink) 4%, transparent);
-  justify-self: center;
-}
-
-.help-dial .wheel {
-  width: 34px;
-  height: 34px;
-  top: 46%;
-}
-
-.help-dial::after {
-  content: "";
-  width: 22px;
-  height: 7px;
-  position: absolute;
-  left: 50%;
-  bottom: 4px;
-  transform: translateX(-50%);
-  background: var(--green);
-=======
 .help-card {
   width: 40px;
   height: 40px;
@@ -1057,7 +1020,6 @@ body[data-hard="true"] .cube {
 .help-card .dial-glyph .wheel {
   width: 30px;
   height: 30px;
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 .modal-footnote {
@@ -1087,11 +1049,7 @@ body[data-hard="true"] .cube {
 .music-slider {
   appearance: none;
   width: 100%;
-<<<<<<< HEAD
-  height: 34px;
-=======
   height: 38px;
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   background: transparent;
   cursor: pointer;
 }
@@ -1109,18 +1067,6 @@ body[data-hard="true"] .cube {
 
 .music-slider::-webkit-slider-thumb {
   appearance: none;
-<<<<<<< HEAD
-  width: 30px;
-  height: 14px;
-  margin-top: -2px;
-  background: var(--green-bar);
-  border: 0;
-}
-
-.music-slider::-moz-range-thumb {
-  width: 30px;
-  height: 14px;
-=======
   width: 8px;
   height: 26px;
   margin-top: -8px;
@@ -1132,7 +1078,6 @@ body[data-hard="true"] .cube {
 .music-slider::-moz-range-thumb {
   width: 8px;
   height: 26px;
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   background: var(--green-bar);
   border: 0;
   border-radius: 0;
@@ -1144,19 +1089,26 @@ body[data-hard="true"] .cube {
   font-variant-numeric: tabular-nums;
 }
 
+.music-credit {
+  margin-top: -2px;
+  color: var(--muted);
+  opacity: .58;
+  font-size: .78rem;
+  line-height: 1.25;
+}
+
+.music-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .future-setting {
   display: grid;
-<<<<<<< HEAD
-  grid-template-columns: 34px 1fr auto;
-  gap: 9px;
-  align-items: center;
-  margin: 8px 0;
-=======
   grid-template-columns: 48px 1fr auto;
   gap: 10px;
   align-items: center;
   margin: 10px 0;
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   color: var(--muted);
   font-size: .93rem;
 }
@@ -1167,23 +1119,6 @@ body[data-hard="true"] .cube {
   font-size: .82rem;
 }
 
-<<<<<<< HEAD
-.tiny-switch {
-  width: 26px;
-  height: 14px;
-  position: relative;
-  background: color-mix(in srgb, var(--ink) 5%, transparent);
-}
-
-.tiny-switch::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 4px;
-  width: 11px;
-  height: 6px;
-  background: var(--mustard-bar);
-=======
 .future-switch-visual {
   width: 44px;
   height: 20px;
@@ -1209,7 +1144,6 @@ body[data-hard="true"] .cube {
   width: 6px;
   height: 24px;
   background: color-mix(in srgb, var(--muted) 65%, var(--panel));
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 .history {
@@ -1333,11 +1267,7 @@ body[data-hard="true"] .cube {
 }
 
 .speaker-icon .speaker-wave,
-<<<<<<< HEAD
-.speaker-icon .speaker-slash {
-=======
 .speaker-icon .speaker-mark {
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   fill: none;
   stroke: currentColor;
 }
@@ -1347,14 +1277,11 @@ body[data-hard="true"] .cube {
   height: 17px;
 }
 
-<<<<<<< HEAD
-=======
 .gear-svg {
   fill: currentColor;
   stroke: none;
 }
 
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 .under-game-icons {
   display: flex;
   justify-content: flex-end;

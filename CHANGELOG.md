@@ -1,5 +1,14 @@
 # changelog
 
+## 0.3.2
+
+- Added a slightly colder blue palette for flipple³ in both light and dark themes, keeping the same readable contrast while making cubed mode feel more icy and distinct.
+- Swapped in the latest no-intro soundtrack files so all four theme/mode tracks share the same loop-ready length.
+- Simplified soundtrack looping to use the new seamless audio loops while keeping timestamp-matched crossfades for theme and mode changes.
+- Added a second speaker wave to the unmuted speaker icon.
+- Added a small Settings credit link: `music by Aiden Cullen`, pointing to the music Linktree.
+- Updated credits and README soundtrack notes to reflect the Aiden Cullen music credit and v0.3.2 release.
+
 ## 0.3.1
 
 - Fixed the broken flipple³ gameplay icon in the Help modal and tightened the supporting visual styles.
@@ -16,16 +25,6 @@
 
 - Added the first full flipple soundtrack system with handmade music by crazywaffleguy throughout the game.
 - Added separate theme and mode soundtracks for normal dark, normal light, flipple³ dark, and flipple³ light.
-- Added a speaker control, music volume slider, local audio preferences, looping playback, and short crossfades when switching themes or modes.
-- Added in-game Help and Settings pop-ups with compact visual explanations for icons, turns, modes, scoring, and practice unlocks.
-- Added a daily share prompt before practice unlock.
-- Added quality-of-life polish around post-game clarity, settings access, and first-player confusion.
-- Added a support ticket log for early player confusion reports.
-
-## 0.3.0
-
-- Added the first full Flipple soundtrack system with handmade music by crazywaffleguy throughout the game.
-- Added separate theme and mode soundtracks for normal dark, normal light, Flipple³ dark, and Flipple³ light.
 - Added a speaker control, music volume slider, local audio preferences, looping playback, and short crossfades when switching themes or modes.
 - Added in-game Help and Settings pop-ups with compact visual explanations for icons, turns, modes, scoring, and practice unlocks.
 - Added a daily share prompt before practice unlock.

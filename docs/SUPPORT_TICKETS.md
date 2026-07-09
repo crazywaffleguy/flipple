@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Flipple Support Ticket Log
-=======
 # flipple support ticket log
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 
 A mostly unserious but potentially useful record of confusing moments, bugs, and player questions.
 
@@ -10,19 +6,13 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 
 **header:** the maddox problem  
 **reported by:** __rex__  
-<<<<<<< HEAD
-**symptom:** player saw a Flipple³ history row with green-looking bars next to `0/5` and asked, “how did i get 0/5 green?”
-=======
 **symptom:** player saw a flipple³ history row with green-looking bars next to `0/5` and asked, “how did i get 0/5 green?”
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 
 **cause:** the colored history bars show the player’s guessed pattern. They are not correctness colors. The score on the right is the actual number of exact matches.
 
 **resolution:** added an in-game Help popup explaining that the right-side score is what matters, and that the colors in the history are just guess history.
 
 **status:** documented and probably still funny.
-<<<<<<< HEAD
-=======
 
 
 ## case #2 - the soundtrack seam
@@ -36,4 +26,16 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 **resolution:** preload the soundtrack set after the first user gesture and prepare the next track timestamp before starting the crossfade.
 
 **status:** tuned in v0.3.1.
->>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
+
+
+## case #3 - the ice level pass
+
+**header:** the ice level pass  
+**reported by:** soundtrack/aesthetic direction  
+**symptom:** flipple³ shared the same warm green/brown base palette as normal mode even though the cubed soundtrack felt glitchier, colder, and more mystical.
+
+**cause:** cubed mode had mode-specific audio but not a mode-specific color palette.
+
+**resolution:** added colder blue-leaning cubed theme palettes and replaced the soundtrack files with no-intro loop-ready exports.
+
+**status:** tuned in v0.3.2.
