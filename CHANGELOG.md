@@ -1,5 +1,14 @@
 # changelog
 
+## 0.3.2 hotfix
+
+- Fixed a broken mode hover listener that stopped the app from finishing startup, leaving the board blank and preventing help/share/practice/audio buttons from working.
+- Replaced the experimental animated top-right controls with stable static mode/theme controls.
+- Reworked the settings icon into a simple ASCII-style control.
+- Resized and corrected the mode selector switch and propeller icons.
+- Rewrote `package.json` as strict valid JSON so Vercel can build again.
+- Bumped only the service worker cache name so the fix is not held back by PWA caching.
+
 ## 0.3.2
 
 - Added a slightly colder blue palette for flipple³ in both light and dark themes, keeping the same readable contrast while making cubed mode feel more icy and distinct.

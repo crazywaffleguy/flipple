@@ -39,3 +39,26 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 **resolution:** added colder blue-leaning cubed theme palettes and replaced the soundtrack files with no-intro loop-ready exports.
 
 **status:** tuned in v0.3.2.
+
+
+## case #3 - blank board after v0.3.2
+
+**header:** blank board / buttons do nothing  
+**symptom:** the page could load with only the play box, submit button, streak, help icon, title, and footer labels. Mode/theme clicks could partially wake the UI, but help, share, practice, and audio controls did not behave correctly.
+
+**cause:** a stale hover animation listener referenced a function that was no longer defined. That JavaScript error happened before startup finished, so the board never rendered and the remaining controls never attached their listeners.
+
+**resolution:** removed the experimental hover animation listener, replaced the top-right controls with simpler stable static icons, and validated the script with `node --check`.
+
+**status:** fixed in the v0.3.2 UI/audio hotfix.
+
+## case #4 - Vercel package JSON parse failure
+
+**header:** production deploy failed before build  
+**symptom:** Vercel reported `/vercel/path0/package.json: Expected double-quoted property name in JSON at position 23`.
+
+**cause:** the deployed copy of `package.json` was malformed during the merge/drag-in process.
+
+**resolution:** rewrote `package.json` as strict valid JSON and checked it with `python3 -m json.tool`.
+
+**status:** fixed in the v0.3.2 UI/audio hotfix.

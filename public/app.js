@@ -301,7 +301,7 @@ function themeToggleMarkup() {
 function modeToggleMarkup() {
   const targetMode = isCubed() ? "normal" : "cubed";
   return `
-    <span class="mode-toggle-shell mode-target-${targetMode}" data-target-mode="${targetMode}" aria-hidden="true">
+    <span class="mode-toggle-shell mode-target-${targetMode}" aria-hidden="true">
       ${targetMode === "cubed" ? dialGlyphMarkup("mode-toggle-dial") : switchGlyphMarkup("mode-toggle-switch", 0)}
     </span>
   `;
@@ -352,7 +352,7 @@ function applyShell() {
 
   if (els.theme) {
     const targetTheme = state.settings.theme === "dark" ? "light" : "dark";
-    els.theme.innerHTML = themeToggleMarkup();
+    els.theme.innerHTML = state.settings.theme === "dark" ? moonIcon() : sunIcon();
     els.theme.className = "icon theme-toggle";
     els.theme.setAttribute("aria-label", `switch to ${targetTheme} mode`);
   }
@@ -365,7 +365,8 @@ function applyShell() {
   }
 
   if (els.settingsButton) {
-    els.settingsButton.innerHTML = gearIcon("mini-svg gear-svg");
+    els.settingsButton.textContent = "[*]";
+    els.settingsButton.classList.add("ascii-settings");
   }
 }
 
@@ -1092,7 +1093,7 @@ function setMusicStartTime(audio, seconds) {
 function startCrossfade(previous, next, offset, targetVolume, fade) {
   clearMusicFade();
 
-  const kickOff = () => {
+  prepareAudioAtOffset(next, offset).then(() => {
     next.volume = fade && previous ? 0 : targetVolume;
 
     next.play().catch(() => {
@@ -1121,9 +1122,7 @@ function startCrossfade(previous, next, offset, targetVolume, fade) {
         next.volume = targetVolume;
       }
     }, 30);
-  };
-
-  prepareAudioAtOffset(next, offset).then(kickOff);
+  });
 }
 
 function stopAudio(audio) {
@@ -1339,7 +1338,6 @@ els.submit.addEventListener("click", submitGuess);
 els.reset.addEventListener("click", restartPractice);
 els.theme.addEventListener("click", toggleTheme);
 els.mode.addEventListener("click", toggleMode);
-els.mode.addEventListener("mouseenter", animateModeTogglePreview);
 els.share.addEventListener("click", shareResult);
 els.practice.addEventListener("click", () => startPractice({ slide: "right" }));
 els.dailyMeta.addEventListener("click", returnToDaily);

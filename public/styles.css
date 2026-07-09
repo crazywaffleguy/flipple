@@ -237,123 +237,64 @@ body[data-hard="true"] .cube {
   stroke: currentColor;
   stroke-width: 2.25;
   stroke-linecap: square;
-  transition: transform 240ms ease, opacity 240ms ease;
-}
-
-.theme-toggle-stack {
-  width: 24px;
-  height: 24px;
-  position: relative;
-  display: block;
-}
-
-.theme-toggle-stack .theme-icon {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.theme-toggle-stack[data-target-theme="light"] .primary {
-  opacity: 1;
-}
-
-.theme-toggle-stack[data-target-theme="light"] .secondary {
-  opacity: 0;
-  transform: translate(-50%, -160%);
-}
-
-.theme-toggle:hover .theme-toggle-stack[data-target-theme="light"] .primary,
-.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="light"] .primary {
-  opacity: 0;
-  transform: translate(-50%, 120%);
-}
-
-.theme-toggle:hover .theme-toggle-stack[data-target-theme="light"] .secondary,
-.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="light"] .secondary {
-  opacity: 1;
-  transform: translate(-50%, -50%);
-}
-
-.theme-toggle-stack[data-target-theme="dark"] .primary {
-  opacity: 1;
-}
-
-.theme-toggle-stack[data-target-theme="dark"] .secondary {
-  opacity: 0;
-  transform: translate(-50%, 120%);
-}
-
-.theme-toggle:hover .theme-toggle-stack[data-target-theme="dark"] .primary,
-.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="dark"] .primary {
-  opacity: 0;
-  transform: translate(-50%, -160%);
-}
-
-.theme-toggle:hover .theme-toggle-stack[data-target-theme="dark"] .secondary,
-.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="dark"] .secondary {
-  opacity: 1;
-  transform: translate(-50%, -50%);
 }
 
 .mode-toggle-shell {
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 32px;
   display: grid;
   place-items: center;
 }
 
 .switch-glyph {
-  width: 22px;
-  height: 24px;
+  width: 30px;
+  height: 32px;
   display: block;
   position: relative;
-  color: currentColor;
+  color: var(--green);
 }
 
 .switch-glyph-stem {
   position: absolute;
-  width: 4px;
-  height: 20px;
+  width: 5px;
+  height: 26px;
   left: 50%;
-  top: 2px;
+  top: 3px;
   transform: translateX(-50%);
-  background: currentColor;
+  background: color-mix(in srgb, currentColor 82%, var(--panel));
 }
 
 .switch-glyph-bar {
   position: absolute;
-  width: 18px;
-  height: 6px;
+  width: 24px;
+  height: 8px;
   left: 50%;
   transform: translateX(-50%);
-  background: currentColor;
-  transition: top 240ms ease;
+  background: var(--green-bar);
 }
 
 .switch-glyph[data-state="0"] .switch-glyph-bar {
-  top: 3px;
+  top: 4px;
 }
 
 .switch-glyph[data-state="1"] .switch-glyph-bar {
-  top: 15px;
+  top: 19px;
 }
 
 .dial-glyph {
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 34px;
   display: block;
   position: relative;
   color: currentColor;
 }
 
 .dial-glyph .wheel {
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) rotate(var(--preview-spin, 0deg));
-  transition: transform 320ms cubic-bezier(.22, .61, .36, 1);
+  transform: translate(-50%, -50%);
 }
 
 .dial-glyph .spoke {
@@ -361,12 +302,16 @@ body[data-hard="true"] .cube {
   stroke-width: 9.5;
 }
 
-.dial-glyph .spoke.yellow {
+.dial-glyph .spoke.yellow,
+.dial-glyph .spoke.blue {
   opacity: .72;
 }
 
-.dial-glyph .spoke.blue {
-  opacity: .5;
+.ascii-settings {
+  font-size: calc(var(--ui-size) * .72);
+  letter-spacing: -.08em;
+  font-weight: var(--control-weight);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 .tries {
@@ -915,37 +860,37 @@ body[data-hard="true"] .cube {
 }
 
 .help-mode-pair .switch-glyph {
-  width: 18px;
-  height: 20px;
+  width: 24px;
+  height: 26px;
 }
 
 .help-mode-pair .switch-glyph-stem {
-  width: 3px;
-  height: 18px;
-  top: 1px;
-}
-
-.help-mode-pair .switch-glyph-bar {
-  width: 15px;
-  height: 5px;
-}
-
-.help-mode-pair .switch-glyph[data-state="0"] .switch-glyph-bar {
+  width: 4px;
+  height: 22px;
   top: 2px;
 }
 
+.help-mode-pair .switch-glyph-bar {
+  width: 20px;
+  height: 6px;
+}
+
+.help-mode-pair .switch-glyph[data-state="0"] .switch-glyph-bar {
+  top: 3px;
+}
+
 .help-mode-pair .switch-glyph[data-state="1"] .switch-glyph-bar {
-  top: 12px;
+  top: 16px;
 }
 
 .help-mode-pair .dial-glyph {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
 .help-mode-pair .dial-glyph .wheel {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 }
 
 .bulb-pair .bulb {
@@ -1275,11 +1220,6 @@ body[data-hard="true"] .cube {
 .mini-svg {
   width: 17px;
   height: 17px;
-}
-
-.gear-svg {
-  fill: currentColor;
-  stroke: none;
 }
 
 .under-game-icons {
