@@ -1,5 +1,15 @@
 # changelog
 
+## 0.3.2 wording and audio polish patch
+
+- rewrote the help and settings copy to better match the current flipple vocabulary: score checker, past guess tracker, board icons, and practice mode unlock language.
+- changed the settings soundtrack blurb to explain that flipple has a completely interactive soundtrack that changes with the theme and mode.
+- changed the settings volume slider into a simple music on/off toggle for more reliable iphone safari behavior.
+- made mobile browsers pause the soundtrack when the page is hidden or closed out, while leaving desktop behavior alone.
+- tightened the crossfade engine so old pending tracks cannot keep playing underneath the new one.
+- refreshed the readme/github explanation with more of the creator’s actual wording and project vocabulary.
+- cleaned up the help mode-icon sizing and added multiple fake guess rows so the gameplay explanation is easier to read visually.
+
 ## 0.3.2 hotfix
 
 - Added saved-result validation so corrupted local daily results can no longer reload into a blank board with empty guess rows.

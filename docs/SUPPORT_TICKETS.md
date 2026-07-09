@@ -86,3 +86,16 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 **resolution:** centered the muted `x`, tightened its stroke, and made the Settings button force-render the ASCII-style `[*]` control.
 
 **status:** included in the v0.3.2 startup/save hotfix patch.
+
+
+## case #6 - duplicate soundtrack layers
+
+**header:** duplicate soundtrack layers  
+**reported by:** mobile safari testing  
+**symptom:** switching themes or modes could occasionally leave two soundtrack versions playing over each other.
+
+**cause:** a pending crossfade could finish after a newer soundtrack switch had already started, which let an outdated audio object survive too long.
+
+**resolution:** added a transition token so only the newest soundtrack change is allowed to complete. mobile-like browsers now pause music when the page is hidden.
+
+**status:** patched in v0.3.2.

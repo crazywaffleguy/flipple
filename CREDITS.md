@@ -17,3 +17,7 @@ All soundtrack music in flipple was written, performed, produced, and recorded b
 All rights to the soundtrack music are retained by **Aiden Cullen**. The music files are included only for use inside flipple and are not licensed for reuse, redistribution, sampling, remixing, or separate release without permission.
 
 Creator attribution is kept in the README, package metadata, source-file headers, and this credits file so the project remains traceable if copied or redistributed.
+
+## interactive soundtrack note
+
+flipple provides a completely interactive soundtrack that changes with the theme and mode. the four tracks are original and handmade by **Aiden Cullen**, and blend seamlessly into each other in a way that gets addicting to toy with.

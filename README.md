@@ -1,8 +1,8 @@
 # flipple
 
-A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like "Wordle" with the iconic color-code breaking aspects from the beloved board game "Mastermind". Its a flipping great game if you ask me!
+a unique take on the wordle-like genre that combines the addicting daily challenge feel of games like wordle with the color-code breaking brain itch of mastermind. its a flipping great game if you ask me!
 
-A daily switch puzzle by **crazywaffleguy**.
+flipple is a daily code-breaking web puzzle by **crazywaffleguy**. flip the switches, guess a code, then use your score checker along with your past guess tracker to narrow down the final code.
 
 Website: <https://flipple.live>
 
@@ -10,24 +10,58 @@ Current version: `flipple v0.3.2`
 
 GitHub: <https://github.com/crazywaffleguy>
 
-Linktree: <https://linktr.ee/crazywaffleguy>
+Creator links: <https://linktr.ee/crazywaffleguy>
+
+Music links: <https://linktr.ee/aidencullenorl>
+
+## gameplay
 
 flipple has two daily modes:
 
 - **flipple** - 5 two-position switches.
-- **flipple³** - 5 three-position propeller dials.
+- **flipple³** - 5 rotating three-position switches. good luck!
 
-The daily puzzle changes at midnight in `America/New_York`. Each mode has its own deterministic answer, puzzle number, local win counter, and wordle-like share result. A shared local streak counts one completed daily puzzle per Eastern day.
+the daily puzzle changes at midnight in `America/New_York`. each mode has its own deterministic answer, puzzle number, local win counter, and wordle-like share result. a shared local streak counts one completed daily puzzle per day.
 
-flipple³ also has a slightly colder, bluer palette in both light and dark themes so the cubed mode feels more like its own icy/glitchy variant while keeping the switch colors readable.
+the colored bars represent your guess history and correlate to the color of the toggle switch, not the standard correctness hints. the number on the right of your guess shows you how many positions you currently have selected correctly.
+
+finish the daily puzzle, tap **share**, and practice mode unlocks for that day.
 
 ## soundtrack
 
-flipple v0.3.2 keeps the full in-game soundtrack, updates the loop-clean soundtrack files, and refines the crossfade behavior. The music changes with the current mode and theme, so normal flipple, flipple³, light mode, and dark mode each have their own track. When the player switches modes or toggles light/dark mode, the game attempts to crossfade at the same timestamp so the soundtrack feels continuous instead of restarting.
+flipple provides a completely interactive soundtrack that changes with the theme and mode.
 
-The music is original and handmade by **Aiden Cullen**. All rights to the music are owned by **Aiden Cullen** and the tracks are included only for use inside flipple.
+the four tracks are original and handmade by **Aiden Cullen**, and blend seamlessly into each other in a way that gets addicting to toy with.
 
-## Project structure
+the soundtrack currently has separate tracks for normal flipple, flipple³, light mode, and dark mode. switching modes or themes attempts to crossfade into the matching timestamp so the music feels like it is transforming with the board instead of restarting.
+
+all soundtrack rights are retained by **Aiden Cullen**. the music files are included only for use inside flipple.
+
+## share behavior
+
+share rows are based on correctness, not the selected in-game color. correct positions are green, unsolved positions are yellow, and missed positions on a losing final row turn red. this keeps flipple³ share results spoiler-light because the shared grid never reveals the blue dial state.
+
+## version label
+
+the small lower-left label is controlled by:
+
+```js
+appVersion: "0.3.2"
+```
+
+in `public/config.js`. future zips/releases should update that value, `package.json`, and `CHANGELOG.md` together.
+
+## final website url for shares
+
+`public/config.js` sets:
+
+```js
+shareSiteUrl: "https://flipple.live"
+```
+
+this keeps local testing from accidentally sharing `localhost`.
+
+## project structure
 
 ```text
 flipple/
@@ -157,7 +191,7 @@ javascript, game, puzzle, wordle, wordle-game, wordle-like, daily, daily-game, w
 - `CREDITS.md` - creator attribution and soundtrack ownership note.
 - `LICENSE.md` - all-rights-reserved project license.
 
-## Notes
+## notes
 
 - The answer is returned by the API because this version prioritizes fun and shareability over anti-cheat seriousness.
 - Local wins, completed daily results, and the shared streak are saved in the browser with `localStorage`. Practice mode does not add wins or streak days.

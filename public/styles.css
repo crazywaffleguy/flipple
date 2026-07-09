@@ -240,15 +240,15 @@ body[data-hard="true"] .cube {
 }
 
 .mode-toggle-shell {
-  width: 34px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
 }
 
 .switch-glyph {
-  width: 30px;
-  height: 32px;
+  width: 34px;
+  height: 40px;
   display: block;
   position: relative;
   color: var(--green);
@@ -257,41 +257,42 @@ body[data-hard="true"] .cube {
 .switch-glyph-stem {
   position: absolute;
   width: 5px;
-  height: 26px;
+  height: 32px;
   left: 50%;
-  top: 3px;
+  top: 5px;
   transform: translateX(-50%);
   background: color-mix(in srgb, currentColor 82%, var(--panel));
 }
 
 .switch-glyph-bar {
   position: absolute;
-  width: 24px;
-  height: 8px;
+  width: 27px;
+  height: 7px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--green-bar);
 }
 
 .switch-glyph[data-state="0"] .switch-glyph-bar {
-  top: 4px;
+  top: 11px;
 }
 
 .switch-glyph[data-state="1"] .switch-glyph-bar {
-  top: 19px;
+  top: 26px;
 }
 
 .dial-glyph {
-  width: 34px;
-  height: 34px;
-  display: block;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
   position: relative;
   color: currentColor;
 }
 
 .dial-glyph .wheel {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -849,7 +850,7 @@ body[data-hard="true"] .cube {
 .help-mode-pair,
 .bulb-pair {
   display: flex;
-  gap: 6px;
+  gap: 7px;
   align-items: center;
   justify-content: center;
 }
@@ -860,38 +861,28 @@ body[data-hard="true"] .cube {
   opacity: .72;
 }
 
-.help-mode-pair .switch-glyph {
-  width: 24px;
-  height: 26px;
+.help-mode-pair .switch-glyph,
+.help-mode-pair .dial-glyph {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
 }
 
 .help-mode-pair .switch-glyph-stem {
   width: 4px;
-  height: 22px;
-  top: 2px;
-}
-
-.help-mode-pair .switch-glyph-bar {
-  width: 20px;
-  height: 6px;
-}
-
-.help-mode-pair .switch-glyph[data-state="0"] .switch-glyph-bar {
+  height: 26px;
   top: 3px;
 }
 
-.help-mode-pair .switch-glyph[data-state="1"] .switch-glyph-bar {
-  top: 16px;
-}
-
-.help-mode-pair .dial-glyph {
-  width: 24px;
-  height: 24px;
+.help-mode-pair .switch-glyph-bar {
+  width: 21px;
+  height: 6px;
+  top: 8px;
 }
 
 .help-mode-pair .dial-glyph .wheel {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
 }
 
 .bulb-pair .bulb {
@@ -899,12 +890,17 @@ body[data-hard="true"] .cube {
   height: 18px;
 }
 
+.help-score-stack {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
 .help-score-sample {
   display: grid;
-  grid-template-columns: 1fr 42px;
+  grid-template-columns: minmax(0, 1fr) 42px;
   gap: 9px;
   align-items: center;
-  margin-bottom: 8px;
 }
 
 .help-score-sample .mini {
@@ -924,8 +920,8 @@ body[data-hard="true"] .cube {
 }
 
 .help-card {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   background: color-mix(in srgb, var(--ink) 5%, transparent);
@@ -935,37 +931,37 @@ body[data-hard="true"] .cube {
 }
 
 .help-card .switch-glyph {
-  width: 24px;
-  height: 28px;
+  width: 34px;
+  height: 40px;
 }
 
 .help-card .switch-glyph-stem {
-  height: 23px;
-  width: 4px;
-  top: 2px;
+  height: 32px;
+  width: 5px;
+  top: 5px;
 }
 
 .help-card .switch-glyph-bar {
-  width: 19px;
-  height: 6px;
+  width: 27px;
+  height: 7px;
 }
 
 .help-card .switch-glyph[data-state="0"] .switch-glyph-bar {
-  top: 4px;
+  top: 11px;
 }
 
 .help-card .switch-glyph[data-state="1"] .switch-glyph-bar {
-  top: 16px;
+  top: 26px;
 }
 
 .help-card .dial-glyph {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
 }
 
 .help-card .dial-glyph .wheel {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
 }
 
 .modal-footnote {
@@ -982,61 +978,37 @@ body[data-hard="true"] .cube {
   text-underline-offset: 3px;
 }
 
-.volume-setting {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
+.settings-mute-toggle {
+  appearance: none;
+  border: 0;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
   color: var(--ink);
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 10px;
+  cursor: pointer;
+  font: inherit;
   font-size: var(--ui-size);
   font-weight: var(--control-weight);
+  text-align: left;
   text-transform: lowercase;
 }
 
-.music-slider {
-  appearance: none;
-  width: 100%;
-  height: 38px;
-  background: transparent;
-  cursor: pointer;
+.settings-mute-toggle:hover,
+.settings-mute-toggle:focus-visible {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
 }
 
-.music-slider::-webkit-slider-runnable-track {
-  height: 10px;
-  background: color-mix(in srgb, var(--green) 40%, var(--panel));
-}
-
-.music-slider::-moz-range-track {
-  height: 10px;
-  background: color-mix(in srgb, var(--green) 40%, var(--panel));
-  border: 0;
-}
-
-.music-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 8px;
-  height: 26px;
-  margin-top: -8px;
-  background: var(--green-bar);
-  border: 0;
-  border-radius: 0;
-}
-
-.music-slider::-moz-range-thumb {
-  width: 8px;
-  height: 26px;
-  background: var(--green-bar);
-  border: 0;
-  border-radius: 0;
-}
-
-.volume-readout {
-  color: var(--muted);
-  font-size: .9rem;
-  font-variant-numeric: tabular-nums;
+.settings-mute-toggle.is-muted {
+  opacity: .68;
 }
 
 .music-credit {
-  margin-top: -2px;
+  margin-top: 8px;
   color: var(--muted);
   opacity: .58;
   font-size: .78rem;
@@ -1090,6 +1062,19 @@ body[data-hard="true"] .cube {
   width: 6px;
   height: 24px;
   background: color-mix(in srgb, var(--muted) 65%, var(--panel));
+}
+
+.future-switch-visual.on {
+  opacity: .9;
+}
+
+.future-switch-visual.on::before {
+  background: color-mix(in srgb, var(--green) 40%, var(--panel));
+}
+
+.future-switch-visual.on::after {
+  left: 34px;
+  background: var(--green-bar);
 }
 
 .history {

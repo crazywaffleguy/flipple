@@ -113,7 +113,9 @@ const music = {
   currentKey: "",
   fadeTimer: null,
   pendingTrackChange: false,
-  preloadedKeys: new Set()
+  preloadedKeys: new Set(),
+  transitionToken: 0,
+  pausedForPageHide: false
 };
 
 function loadSettings() {
@@ -1141,10 +1143,11 @@ function updateMusicForContext(options = {}) {
   const previous = music.current;
   const offset = previous ? previous.currentTime || 0 : 0;
   const next = makeMusicAudio(key);
+  const token = ++music.transitionToken;
 
   music.current = next;
   music.currentKey = key;
-  startCrossfade(previous, next, offset, targetVolume, fade);
+  startCrossfade(previous, next, offset, targetVolume, fade, token);
 }
 
 function makeMusicAudio(key) {
@@ -1160,10 +1163,19 @@ function setMusicStartTime(audio, seconds) {
   prepareAudioAtOffset(audio, seconds);
 }
 
-function startCrossfade(previous, next, offset, targetVolume, fade) {
+function startCrossfade(previous, next, offset, targetVolume, fade, token) {
   clearMusicFade();
 
+  const requestedAt = performance.now();
+
   prepareAudioAtOffset(next, offset).then(() => {
+    if (token !== music.transitionToken) {
+      stopAudio(next);
+      return;
+    }
+
+    const elapsed = (performance.now() - requestedAt) / 1000;
+    setMusicStartTime(next, offset + elapsed);
     next.volume = fade && previous ? 0 : targetVolume;
 
     next.play().catch(() => {
@@ -1180,6 +1192,12 @@ function startCrossfade(previous, next, offset, targetVolume, fade) {
     const duration = APP.audio.fadeMs;
 
     music.fadeTimer = setInterval(() => {
+      if (token !== music.transitionToken) {
+        clearMusicFade();
+        stopAudio(next);
+        return;
+      }
+
       const progress = clamp((performance.now() - start) / duration, 0, 1);
       const eased = progress * progress * (3 - 2 * progress);
 
@@ -1196,6 +1214,7 @@ function startCrossfade(previous, next, offset, targetVolume, fade) {
 }
 
 function stopAudio(audio) {
+  if (!audio) return;
   audio.pause();
   audio.removeAttribute("src");
   audio.load();
@@ -1205,6 +1224,25 @@ function clearMusicFade() {
   if (!music.fadeTimer) return;
   clearInterval(music.fadeTimer);
   music.fadeTimer = null;
+}
+
+function isMobileLikeDevice() {
+  return window.matchMedia?.("(hover: none) and (pointer: coarse)")?.matches || /iphone|ipad|ipod|android/i.test(navigator.userAgent);
+}
+
+function handleVisibilityChange() {
+  if (!isMobileLikeDevice()) return;
+
+  if (document.hidden) {
+    music.pausedForPageHide = Boolean(music.current && !isSoundMuted());
+    pauseMusicImmediately();
+    return;
+  }
+
+  if (music.pausedForPageHide) {
+    music.pausedForPageHide = false;
+    updateMusicForContext({ fade: false });
+  }
 }
 
 function openHelp() {
@@ -1241,17 +1279,16 @@ function closeModal() {
 }
 
 function settingsMarkup() {
-  const volume = Math.round(state.settings.musicVolume * 100);
+  const muted = isSoundMuted();
   return `
     <section class="modal-section">
       <h3>soundtrack</h3>
-      <p>The music changes with theme and mode. The four tracks are original, handmade, and now loop without an intro.</p>
-      <p>Theme and mode changes crossfade at the same timestamp so the soundtrack stays smooth instead of jumping.</p>
-      <label class="volume-setting" for="musicVolumeSlider">
-        <span>music volume</span>
-        <input class="music-slider" id="musicVolumeSlider" type="range" min="0" max="100" value="${volume}" />
-        <span class="volume-readout" id="musicVolumeReadout">${volume}%</span>
-      </label>
+      <p>flipple provides a completely interactive soundtrack that changes with the theme and mode.</p>
+      <p>the four tracks are original and handmade by Aiden Cullen, and blend seamlessly into each other in a way that gets addicting to toy with.</p>
+      <button class="settings-mute-toggle${muted ? " is-muted" : ""}" id="settingsMuteToggle" type="button" aria-pressed="${!muted}">
+        <span class="future-switch-visual ${muted ? "off" : "on"}" aria-hidden="true"></span>
+        <span>${muted ? "music muted" : "music on"}</span>
+      </button>
       <p class="music-credit">music by <a href="https://linktr.ee/aidencullenorl" target="_blank" rel="noopener noreferrer">Aiden Cullen</a></p>
     </section>
 
@@ -1260,74 +1297,92 @@ function settingsMarkup() {
       <div class="future-setting">
         <span class="future-switch-visual off" aria-hidden="true"></span>
         <span>haptic feedback</span>
-        <em>coming later</em>
+        <em>coming soon</em>
       </div>
       <div class="future-setting">
         <span class="future-switch-visual off" aria-hidden="true"></span>
         <span>sound effects</span>
-        <em>coming later</em>
+        <em>coming soon</em>
       </div>
     </section>
   `;
 }
 
 function wireSettingsControls() {
-  const slider = document.getElementById("musicVolumeSlider");
-  if (!slider) return;
+  const muteToggle = document.getElementById("settingsMuteToggle");
+  if (!muteToggle) return;
 
-  slider.addEventListener("input", (event) => setMusicVolume(event.target.value));
+  muteToggle.addEventListener("click", () => {
+    toggleSoundMute();
+    updateSettingsVolumeUI();
+  });
 }
 
 function updateSettingsVolumeUI() {
-  const slider = document.getElementById("musicVolumeSlider");
-  const readout = document.getElementById("musicVolumeReadout");
-  const value = Math.round(state.settings.musicVolume * 100);
+  const muteToggle = document.getElementById("settingsMuteToggle");
+  if (!muteToggle) return;
 
-  if (slider) slider.value = String(value);
-  if (readout) readout.textContent = `${value}%`;
+  const muted = isSoundMuted();
+  muteToggle.className = `settings-mute-toggle${muted ? " is-muted" : ""}`;
+  muteToggle.setAttribute("aria-pressed", String(!muted));
+  muteToggle.innerHTML = `
+    <span class="future-switch-visual ${muted ? "off" : "on"}" aria-hidden="true"></span>
+    <span>${muted ? "music muted" : "music on"}</span>
+  `;
 }
 
 function helpMarkup() {
   return `
     <section class="modal-section intro-section">
-      <p>flipple is a daily code-breaking puzzle. Flip the pattern, press the check, then use the score to narrow down the hidden answer.</p>
+      <p>flipple is a daily code-breaking web puzzle. flip the switches, guess a code, then use your score checker along with your past guess tracker to narrow down the final code.</p>
     </section>
 
     <section class="modal-section">
-      <h3>icons around the board</h3>
-      <div class="help-row"><span class="help-visual">${crownIcon()}</span><p><b>crown</b> is your local wins for the current mode.</p></div>
-      <div class="help-row"><span class="help-visual">${modeHelpVisualMarkup()}</span><p><b>mode</b> is the top-right mode toggle. It shows the mode you will switch into next.</p></div>
-      <div class="help-row"><span class="help-visual">${themeHelpVisualMarkup()}</span><p><b>theme</b> is the light/dark toggle. It shows the theme you will switch into next.</p></div>
-      <div class="help-row"><span class="help-visual bulb-pair">${bulbMarkup(false)}${bulbMarkup(true)}</span><p><b>lightbulbs</b> show your 6 turns. Each guess dims one bulb.</p></div>
+      <h3>board icons</h3>
+      <div class="help-row"><span class="help-visual">${crownIcon()}</span><p>the <b>crown</b> icon tracks your local wins for the current mode.</p></div>
+      <div class="help-row"><span class="help-visual">${modeHelpVisualMarkup()}</span><p><b>top right</b> is the mode toggle. it shows the mode you will switch to if you choose to.</p></div>
+      <div class="help-row"><span class="help-visual">${themeHelpVisualMarkup()}</span><p><b>theme</b> is the light/dark toggle. it shows the theme you will switch to if you choose to.</p></div>
+      <div class="help-row"><span class="help-visual bulb-pair">${bulbMarkup(false)}${bulbMarkup(true)}</span><p><b>lightbulbs</b> represent your six turns. each guess uses a bulb.</p></div>
     </section>
 
     <section class="modal-section">
       <h3>gameplay</h3>
-      <div class="help-score-sample">
-        <div class="mini"><div class="bit" data-color="0"></div><div class="bit" data-color="0"></div><div class="bit" data-color="0"></div><div class="bit" data-color="0"></div><div class="bit" data-color="0"></div></div>
-        <span>0/5</span>
+      <div class="help-score-stack">
+        <div class="help-score-sample">
+          <div class="mini"><div class="bit" data-color="0"></div><div class="bit" data-color="2"></div><div class="bit" data-color="0"></div><div class="bit" data-color="2"></div><div class="bit" data-color="0"></div></div>
+          <span>2/5</span>
+        </div>
+        <div class="help-score-sample">
+          <div class="mini"><div class="bit" data-color="2"></div><div class="bit" data-color="2"></div><div class="bit" data-color="0"></div><div class="bit" data-color="0"></div><div class="bit" data-color="2"></div></div>
+          <span>3/5</span>
+        </div>
+        <div class="help-score-sample">
+          <div class="mini"><div class="bit" data-color="0"></div><div class="bit" data-color="0"></div><div class="bit" data-color="2"></div><div class="bit" data-color="0"></div><div class="bit" data-color="2"></div></div>
+          <span>4/5</span>
+        </div>
       </div>
-      <p>The number on the right is how many positions are exactly right. The colored bars are your guess history, not green/yellow correctness hints.</p>
+      <p>the colored bars represent your guess history and correlate to the color of the toggle switch, not the standard correctness hints. the number on the right of your guess shows you how many positions you currently have selected correctly.</p>
     </section>
 
     <section class="modal-section">
       <h3>gameplay modes</h3>
-      <div class="help-row"><span class="help-visual">${helpSwitchVisualMarkup()}</span><p><b>normal</b> uses two-position switches.</p></div>
-      <div class="help-row"><span class="help-visual">${helpDialVisualMarkup()}</span><p><b>flipple³</b> uses rotating three-position propellers. Same goal, one extra state.</p></div>
+      <div class="help-row"><span class="help-visual">${helpSwitchVisualMarkup()}</span><p><b>flipple</b> uses two-position switches.</p></div>
+      <div class="help-row"><span class="help-visual">${helpDialVisualMarkup()}</span><p><b>flipple³</b> uses rotating three-position switches. good luck!</p></div>
     </section>
 
     <section class="modal-section">
       <h3>soundtrack</h3>
-      <p>flipple has a full in-game soundtrack throughout the experience. Each theme and mode has its own track, and the music was made by Aiden Cullen.</p>
+      <p>flipple provides a completely interactive soundtrack that changes with the theme and mode.</p>
+      <p>the four tracks are original and handmade by Aiden Cullen, and blend seamlessly into each other in a way that gets addicting to toy with.</p>
     </section>
 
     <section class="modal-section">
-      <h3>how to unlock</h3>
-      <p>Finish the daily puzzle, tap <b>share</b>, and practice mode unlocks for that day.</p>
+      <h3>how to unlock practice mode</h3>
+      <p>finish the daily puzzle, tap <b>share</b>, and practice mode unlocks for that day.</p>
     </section>
 
     <footer class="modal-footnote">
-      flipple by crazywaffleguy. Source, notes, and project info live on <a href="https://github.com/crazywaffleguy/flipple" target="_blank" rel="noopener noreferrer">GitHub</a>.
+      flipple by crazywaffleguy. source, notes, and project info live on <a href="https://github.com/crazywaffleguy/flipple" target="_blank" rel="noopener noreferrer">GitHub</a>.
     </footer>
   `;
 }
@@ -1425,5 +1480,6 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("pointerdown", unlockAudioFromGesture, { once: true });
 document.addEventListener("keydown", unlockAudioFromGesture, { once: true });
+document.addEventListener("visibilitychange", handleVisibilityChange);
 
 startDaily();

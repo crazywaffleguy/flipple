@@ -1,4 +1,4 @@
-const CACHE_NAME = "flipple-v0.3.2-startup-save-icon-hotfix";
+const CACHE_NAME = "flipple-v0.3.2-copy-audio-text-hotfix";
 
 const APP_SHELL = [
   "/",
