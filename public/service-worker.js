@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const CACHE_NAME = "flipple-v0.3.0-menu-audio";
+=======
+const CACHE_NAME = "flipple-v0.3.1-menu-audio";
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 
 const APP_SHELL = [
   "/",

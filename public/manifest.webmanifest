@@ -1,6 +1,6 @@
 {
-  "name": "Flipple",
-  "short_name": "Flipple",
+  "name": "flipple",
+  "short_name": "flipple",
   "description": "A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like Wordle and Connections with the iconic code breaking aspects from beloved board games such as Mastermind. Its a flipping great game if you ask me!",
   "start_url": "/?source=pwa",
   "scope": "/",

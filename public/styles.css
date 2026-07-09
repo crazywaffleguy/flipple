@@ -178,21 +178,17 @@ body[data-hard="true"] .cube {
   font-weight: var(--control-weight);
   cursor: pointer;
   padding: 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .icon:active,
 .icon:hover,
+.icon:focus-visible,
 .icon.on {
   color: var(--ink);
   opacity: 1;
   background: color-mix(in srgb, var(--ink) 7%, transparent);
-}
-
-.mode-text {
-  font-size: 1rem;
-  line-height: 1;
-  font-weight: var(--control-weight);
-  letter-spacing: .02em;
 }
 
 .theme-icon {
@@ -203,6 +199,136 @@ body[data-hard="true"] .cube {
   stroke: currentColor;
   stroke-width: 2.25;
   stroke-linecap: square;
+  transition: transform 240ms ease, opacity 240ms ease;
+}
+
+.theme-toggle-stack {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  display: block;
+}
+
+.theme-toggle-stack .theme-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.theme-toggle-stack[data-target-theme="light"] .primary {
+  opacity: 1;
+}
+
+.theme-toggle-stack[data-target-theme="light"] .secondary {
+  opacity: 0;
+  transform: translate(-50%, -160%);
+}
+
+.theme-toggle:hover .theme-toggle-stack[data-target-theme="light"] .primary,
+.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="light"] .primary {
+  opacity: 0;
+  transform: translate(-50%, 120%);
+}
+
+.theme-toggle:hover .theme-toggle-stack[data-target-theme="light"] .secondary,
+.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="light"] .secondary {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.theme-toggle-stack[data-target-theme="dark"] .primary {
+  opacity: 1;
+}
+
+.theme-toggle-stack[data-target-theme="dark"] .secondary {
+  opacity: 0;
+  transform: translate(-50%, 120%);
+}
+
+.theme-toggle:hover .theme-toggle-stack[data-target-theme="dark"] .primary,
+.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="dark"] .primary {
+  opacity: 0;
+  transform: translate(-50%, -160%);
+}
+
+.theme-toggle:hover .theme-toggle-stack[data-target-theme="dark"] .secondary,
+.theme-toggle:focus-visible .theme-toggle-stack[data-target-theme="dark"] .secondary {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.mode-toggle-shell {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+}
+
+.switch-glyph {
+  width: 22px;
+  height: 24px;
+  display: block;
+  position: relative;
+  color: currentColor;
+}
+
+.switch-glyph-stem {
+  position: absolute;
+  width: 4px;
+  height: 20px;
+  left: 50%;
+  top: 2px;
+  transform: translateX(-50%);
+  background: currentColor;
+}
+
+.switch-glyph-bar {
+  position: absolute;
+  width: 18px;
+  height: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: currentColor;
+  transition: top 240ms ease;
+}
+
+.switch-glyph[data-state="0"] .switch-glyph-bar {
+  top: 3px;
+}
+
+.switch-glyph[data-state="1"] .switch-glyph-bar {
+  top: 15px;
+}
+
+.dial-glyph {
+  width: 26px;
+  height: 26px;
+  display: block;
+  position: relative;
+  color: currentColor;
+}
+
+.dial-glyph .wheel {
+  width: 24px;
+  height: 24px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(var(--preview-spin, 0deg));
+  transition: transform 320ms cubic-bezier(.22, .61, .36, 1);
+}
+
+.dial-glyph .spoke {
+  stroke: currentColor;
+  stroke-width: 9.5;
+}
+
+.dial-glyph .spoke.yellow {
+  opacity: .72;
+}
+
+.dial-glyph .spoke.blue {
+  opacity: .5;
 }
 
 .tries {
@@ -735,6 +861,7 @@ body[data-hard="true"] .cube {
   height: 18px;
 }
 
+<<<<<<< HEAD
 .mini-mode {
   background: color-mix(in srgb, var(--ink) 7%, transparent);
   color: var(--ink);
@@ -746,10 +873,60 @@ body[data-hard="true"] .cube {
 .bulb-pair {
   display: flex;
   gap: 4px;
+=======
+.help-theme-pair,
+.help-mode-pair,
+.bulb-pair {
+  display: flex;
+  gap: 6px;
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   align-items: center;
   justify-content: center;
 }
 
+<<<<<<< HEAD
+=======
+.help-theme-pair,
+.help-mode-pair {
+  color: var(--ink);
+  opacity: .72;
+}
+
+.help-mode-pair .switch-glyph {
+  width: 18px;
+  height: 20px;
+}
+
+.help-mode-pair .switch-glyph-stem {
+  width: 3px;
+  height: 18px;
+  top: 1px;
+}
+
+.help-mode-pair .switch-glyph-bar {
+  width: 15px;
+  height: 5px;
+}
+
+.help-mode-pair .switch-glyph[data-state="0"] .switch-glyph-bar {
+  top: 2px;
+}
+
+.help-mode-pair .switch-glyph[data-state="1"] .switch-glyph-bar {
+  top: 12px;
+}
+
+.help-mode-pair .dial-glyph {
+  width: 18px;
+  height: 18px;
+}
+
+.help-mode-pair .dial-glyph .wheel {
+  width: 18px;
+  height: 18px;
+}
+
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 .bulb-pair .bulb {
   width: 12px;
   height: 18px;
@@ -779,6 +956,7 @@ body[data-hard="true"] .cube {
   font-weight: var(--control-weight);
 }
 
+<<<<<<< HEAD
 .help-switch {
   width: 34px;
   height: 34px;
@@ -835,6 +1013,51 @@ body[data-hard="true"] .cube {
   bottom: 4px;
   transform: translateX(-50%);
   background: var(--green);
+=======
+.help-card {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  justify-self: center;
+  color: var(--ink);
+  opacity: .86;
+}
+
+.help-card .switch-glyph {
+  width: 24px;
+  height: 28px;
+}
+
+.help-card .switch-glyph-stem {
+  height: 23px;
+  width: 4px;
+  top: 2px;
+}
+
+.help-card .switch-glyph-bar {
+  width: 19px;
+  height: 6px;
+}
+
+.help-card .switch-glyph[data-state="0"] .switch-glyph-bar {
+  top: 4px;
+}
+
+.help-card .switch-glyph[data-state="1"] .switch-glyph-bar {
+  top: 16px;
+}
+
+.help-card .dial-glyph {
+  width: 30px;
+  height: 30px;
+}
+
+.help-card .dial-glyph .wheel {
+  width: 30px;
+  height: 30px;
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 .modal-footnote {
@@ -864,7 +1087,11 @@ body[data-hard="true"] .cube {
 .music-slider {
   appearance: none;
   width: 100%;
+<<<<<<< HEAD
   height: 34px;
+=======
+  height: 38px;
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   background: transparent;
   cursor: pointer;
 }
@@ -882,6 +1109,7 @@ body[data-hard="true"] .cube {
 
 .music-slider::-webkit-slider-thumb {
   appearance: none;
+<<<<<<< HEAD
   width: 30px;
   height: 14px;
   margin-top: -2px;
@@ -892,6 +1120,19 @@ body[data-hard="true"] .cube {
 .music-slider::-moz-range-thumb {
   width: 30px;
   height: 14px;
+=======
+  width: 8px;
+  height: 26px;
+  margin-top: -8px;
+  background: var(--green-bar);
+  border: 0;
+  border-radius: 0;
+}
+
+.music-slider::-moz-range-thumb {
+  width: 8px;
+  height: 26px;
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   background: var(--green-bar);
   border: 0;
   border-radius: 0;
@@ -905,10 +1146,17 @@ body[data-hard="true"] .cube {
 
 .future-setting {
   display: grid;
+<<<<<<< HEAD
   grid-template-columns: 34px 1fr auto;
   gap: 9px;
   align-items: center;
   margin: 8px 0;
+=======
+  grid-template-columns: 48px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   color: var(--muted);
   font-size: .93rem;
 }
@@ -919,6 +1167,7 @@ body[data-hard="true"] .cube {
   font-size: .82rem;
 }
 
+<<<<<<< HEAD
 .tiny-switch {
   width: 26px;
   height: 14px;
@@ -934,6 +1183,33 @@ body[data-hard="true"] .cube {
   width: 11px;
   height: 6px;
   background: var(--mustard-bar);
+=======
+.future-switch-visual {
+  width: 44px;
+  height: 20px;
+  position: relative;
+  display: block;
+  justify-self: center;
+  opacity: .6;
+}
+
+.future-switch-visual::before {
+  content: "";
+  position: absolute;
+  inset: 5px 0 5px 0;
+  background: color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.future-switch-visual::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 24px;
+  background: color-mix(in srgb, var(--muted) 65%, var(--panel));
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 .history {
@@ -1057,7 +1333,11 @@ body[data-hard="true"] .cube {
 }
 
 .speaker-icon .speaker-wave,
+<<<<<<< HEAD
 .speaker-icon .speaker-slash {
+=======
+.speaker-icon .speaker-mark {
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   fill: none;
   stroke: currentColor;
 }
@@ -1067,6 +1347,14 @@ body[data-hard="true"] .cube {
   height: 17px;
 }
 
+<<<<<<< HEAD
+=======
+.gear-svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 .under-game-icons {
   display: flex;
   justify-content: flex-end;

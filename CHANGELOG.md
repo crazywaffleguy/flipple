@@ -1,4 +1,26 @@
-# Changelog
+# changelog
+
+## 0.3.1
+
+- Fixed the broken flipple³ gameplay icon in the Help modal and tightened the supporting visual styles.
+- Reworked the top-right mode toggle so it previews the mode you will switch into, using a propeller icon or a switch icon instead of `II / III`.
+- Added hover motion to the top-right controls: the mode preview now spins or flips, and the theme preview now animates a simple sun/moon rise-set transition.
+- Reworked the Settings gear icon so it reads as a cleaner gear instead of a sunburst.
+- Changed the muted speaker icon from a slash to an `x`.
+- Updated the music slider thumb to a thin vertical handle and restyled the placeholder future switches to match that horizontal switch language.
+- Tightened soundtrack switching so theme/mode crossfades begin from the exact matched timestamp more smoothly, and swapped in the new loop-matched soundtrack files.
+- Standardized visible project branding to lowercase `flipple` across the app shell and core project docs.
+- Bumped the public app, package, and cache versioning to `0.3.1`.
+
+## 0.3.0
+
+- Added the first full flipple soundtrack system with handmade music by crazywaffleguy throughout the game.
+- Added separate theme and mode soundtracks for normal dark, normal light, flipple³ dark, and flipple³ light.
+- Added a speaker control, music volume slider, local audio preferences, looping playback, and short crossfades when switching themes or modes.
+- Added in-game Help and Settings pop-ups with compact visual explanations for icons, turns, modes, scoring, and practice unlocks.
+- Added a daily share prompt before practice unlock.
+- Added quality-of-life polish around post-game clarity, settings access, and first-player confusion.
+- Added a support ticket log for early player confusion reports.
 
 ## 0.3.0
 
@@ -12,7 +34,7 @@
 
 ## 0.2.3
 
-- Added PWA support so Flipple can be installed to a phone home screen.
+- Added PWA support so flipple can be installed to a phone home screen.
 - Added a web app manifest, service worker, and generated app icons from the current favicon artwork.
 - Cached the app shell while intentionally leaving daily API responses uncached so daily puzzles do not get stuck.
 - Updated the visible app version and package metadata to v0.2.3.
@@ -56,7 +78,7 @@
 - Restored full native share text so mobile share sheets include the title, bulbs, score grid, and `flipple.live` link together.
 - Simplified share headers to show the puzzle title and number, then the lightbulb line on its own.
 - Added a red final-row loss indicator so missed switches on the sixth guess show as red while correct positions stay green.
-- Kept Flipple³ share rows spoiler-friendly with green/yellow-only rows except for the final failed loss row.
+- Kept flipple³ share rows spoiler-friendly with green/yellow-only rows except for the final failed loss row.
 
 ## 0.1.11
 
@@ -75,7 +97,7 @@
 
 ## 0.1.9
 
-- Adjusted the Flipple title lettering for a more connected custom wordmark.
+- Adjusted the flipple title lettering for a more connected custom wordmark.
 - Matched the game typography and preview artwork more closely.
 - Thinned the normal-mode switch stems for consistency with the preview artwork.
 - Regenerated the social preview with green/yellow-only artwork and no cubed marker.
@@ -118,12 +140,12 @@
 - Moved the post-game share tray near the bottom of the game card.
 - Added `docs/DEPLOYMENT.md` and `docs/DEVELOPMENT.md`.
 - Kept share result bulbs as `💡` and `◼️`.
-- Kept Flipple³ share rows green/yellow only, with no blue emoji spoilers.
+- Kept flipple³ share rows green/yellow only, with no blue emoji spoilers.
 
 ## 0.1.1
 
 - Updated share results to use `💡` for used guesses and `◼️` for unused guesses.
-- Kept Flipple³ share rows green/yellow only, with no blue emoji spoilers.
+- Kept flipple³ share rows green/yellow only, with no blue emoji spoilers.
 - Centralized the future permanent website URL in app configuration.
 - Added configuration and launch checklist documentation.
 

@@ -10,7 +10,11 @@
 
 window.FLIPPLE_CONFIG = Object.freeze({
   // Visible version label. Update this once per shipped ZIP/release.
+<<<<<<< HEAD
   appVersion: "0.3.0",
+=======
+  appVersion: "0.3.1",
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 
   // Permanent public website URL used in native share sheets and clipboard results.
   // During local development, shares still point to the live domain on purpose.

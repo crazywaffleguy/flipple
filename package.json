@@ -1,6 +1,10 @@
 {
   "name": "flipple",
+<<<<<<< HEAD
   "version": "0.3.0",
+=======
+  "version": "0.3.1",
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   "private": true,
   "description": "A unique take on the Wordle-like genre that combines elements of the addicting daily challenges brought by games like Wordle and Connections with the iconic code breaking aspects from beloved board games such as Mastermind. Its a flipping great game if you ask me!",
   "type": "commonjs",

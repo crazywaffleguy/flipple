@@ -13,7 +13,7 @@
 const PROJECT_CONFIG = window.FLIPPLE_CONFIG || {};
 
 const APP = Object.freeze({
-  version: PROJECT_CONFIG.appVersion || "0.2.1",
+  version: PROJECT_CONFIG.appVersion || "0.3.1",
   length: 5,
   maxGuesses: 6,
   timezone: "America/New_York",
@@ -113,7 +113,12 @@ const music = {
   currentKey: "",
   fadeTimer: null,
   loopTimer: null,
+<<<<<<< HEAD
   pendingTrackChange: false
+=======
+  pendingTrackChange: false,
+  preloadedKeys: new Set()
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 };
 
 function loadSettings() {
@@ -195,18 +200,18 @@ function statesForMode() {
   return modeConfig().states;
 }
 
-function moonIcon() {
+function moonIcon(className = "theme-icon") {
   return `
-    <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M18.8 16.7c-1.2.8-2.6 1.2-4.2 1.2-4.4 0-8-3.6-8-8 0-1.8.6-3.5 1.7-4.8-3.2 1.2-5.5 4.3-5.5 7.9 0 4.6 3.7 8.4 8.4 8.4 3.3 0 6.2-1.9 7.6-4.7z"></path>
     </svg>
   `;
 }
 
-function sunIcon() {
+function sunIcon(className = "theme-icon") {
   return `
-    <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="5"></circle>
+    <svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.8"></circle>
       <path d="M12 1.8v3.1M12 19.1v3.1M1.8 12h3.1M19.1 12h3.1M4.8 4.8l2.2 2.2M17 17l2.2 2.2M19.2 4.8 17 7M7 17l-2.2 2.2" fill="none"></path>
     </svg>
   `;
@@ -240,22 +245,120 @@ function xIcon(className = "") {
 function gearIcon(className = "") {
   return `
     <svg class="${className}" viewBox="0 0 24 24" aria-hidden="true">
+<<<<<<< HEAD
       <circle cx="12" cy="12" r="3.15"></circle>
       <path d="M12 2.8v3M12 18.2v3M4 6.2l2.2 2.1M17.8 15.7l2.2 2.1M2.8 12h3M18.2 12h3M4 17.8l2.2-2.1M17.8 8.3 20 6.2"></path>
+=======
+      <path d="M10 2.9h4l.5 2.1c.6.2 1.2.4 1.8.8l1.9-1.1 2.8 2.8-1.1 1.9c.3.6.6 1.2.8 1.8l2.1.5v4l-2.1.5c-.2.6-.4 1.2-.8 1.8l1.1 1.9-2.8 2.8-1.9-1.1c-.6.3-1.2.6-1.8.8L14 21.1h-4l-.5-2.1c-.6-.2-1.2-.4-1.8-.8l-1.9 1.1-2.8-2.8 1.1-1.9c-.3-.6-.6-1.2-.8-1.8l-2.1-.5v-4l2.1-.5c.2-.6.4-1.2.8-1.8L3 4.7l2.8-2.8 1.9 1.1c.6-.3 1.2-.6 1.8-.8L10 2.9zM12 8.7A3.3 3.3 0 1 0 12 15.3A3.3 3.3 0 1 0 12 8.7z"></path>
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
     </svg>
   `;
 }
 
 function speakerIcon(isMuted, className = "") {
+<<<<<<< HEAD
   const slash = isMuted ? '<line class="speaker-slash" x1="17" y1="7" x2="22" y2="17"></line>' : '<path class="speaker-wave" d="M17 8.3c1.1 1 1.7 2.2 1.7 3.7s-.6 2.7-1.7 3.7"></path>';
   return `
     <svg class="speaker-icon ${className}" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M4 9.2h4.2L14 4.8v14.4l-5.8-4.4H4z"></path>
       ${slash}
+=======
+  const mark = isMuted
+    ? `
+      <line class="speaker-mark" x1="16.5" y1="8" x2="21.3" y2="12.8"></line>
+      <line class="speaker-mark" x1="21.3" y1="8" x2="16.5" y2="12.8"></line>
+    `
+    : '<path class="speaker-wave" d="M17 8.3c1.1 1 1.7 2.2 1.7 3.7s-.6 2.7-1.7 3.7"></path>';
+
+  return `
+    <svg class="speaker-icon ${className}" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9.2h4.2L14 4.8v14.4l-5.8-4.4H4z"></path>
+      ${mark}
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
     </svg>
   `;
 }
 
+<<<<<<< HEAD
+=======
+function switchGlyphMarkup(className = "", state = 0) {
+  return `
+    <span class="switch-glyph ${className}" data-state="${state}" aria-hidden="true">
+      <span class="switch-glyph-stem"></span>
+      <span class="switch-glyph-bar"></span>
+    </span>
+  `;
+}
+
+function dialGlyphMarkup(className = "", spin = 0) {
+  return `
+    <span class="dial-glyph ${className}" style="--preview-spin: ${spin}deg;" aria-hidden="true">
+      ${wheelMarkup()}
+    </span>
+  `;
+}
+
+function themeToggleMarkup() {
+  const targetTheme = state.settings.theme === "dark" ? "light" : "dark";
+  const primaryIcon = targetTheme === "light"
+    ? sunIcon("theme-icon primary")
+    : moonIcon("theme-icon primary");
+  const secondaryIcon = targetTheme === "light"
+    ? moonIcon("theme-icon secondary")
+    : sunIcon("theme-icon secondary");
+
+  return `
+    <span class="theme-toggle-stack" data-target-theme="${targetTheme}" aria-hidden="true">
+      ${primaryIcon}
+      ${secondaryIcon}
+    </span>
+  `;
+}
+
+function modeToggleMarkup() {
+  const targetMode = isCubed() ? "normal" : "cubed";
+  return `
+    <span class="mode-toggle-shell mode-target-${targetMode}" data-target-mode="${targetMode}" aria-hidden="true">
+      ${targetMode === "cubed" ? dialGlyphMarkup("mode-toggle-dial") : switchGlyphMarkup("mode-toggle-switch", 0)}
+    </span>
+  `;
+}
+
+function themeHelpVisualMarkup() {
+  return `
+    <span class="help-theme-pair" aria-hidden="true">
+      ${sunIcon("theme-icon help-theme-icon")}
+      ${moonIcon("theme-icon help-theme-icon")}
+    </span>
+  `;
+}
+
+function modeHelpVisualMarkup() {
+  return `
+    <span class="help-mode-pair" aria-hidden="true">
+      ${switchGlyphMarkup("help-mode-switch", 0)}
+      ${dialGlyphMarkup("help-mode-dial")}
+    </span>
+  `;
+}
+
+function helpSwitchVisualMarkup() {
+  return `
+    <span class="help-card" aria-hidden="true">
+      ${switchGlyphMarkup("help-switch-glyph", 0)}
+    </span>
+  `;
+}
+
+function helpDialVisualMarkup() {
+  return `
+    <span class="help-card help-dial-card" aria-hidden="true">
+      ${dialGlyphMarkup("help-dial-glyph")}
+    </span>
+  `;
+}
+
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 function finalScoreText() {
   return `${state.guesses.length}/${APP.maxGuesses}`;
 }
@@ -264,10 +367,31 @@ function applyShell() {
   document.body.dataset.theme = state.settings.theme;
   document.body.dataset.hard = String(isCubed());
   els.title.setAttribute("aria-label", isCubed() ? "flipple cubed" : "flipple");
+<<<<<<< HEAD
   els.theme.innerHTML = state.settings.theme === "dark" ? moonIcon() : sunIcon();
   els.mode.innerHTML = `<span class="mode-text">${modeConfig().selector}</span>`;
   els.mode.className = "icon" + (isCubed() ? " on" : "");
   if (els.settingsButton) els.settingsButton.innerHTML = gearIcon("mini-svg");
+=======
+
+  if (els.theme) {
+    const targetTheme = state.settings.theme === "dark" ? "light" : "dark";
+    els.theme.innerHTML = themeToggleMarkup();
+    els.theme.className = "icon theme-toggle";
+    els.theme.setAttribute("aria-label", `switch to ${targetTheme} mode`);
+  }
+
+  if (els.mode) {
+    const targetMode = isCubed() ? "normal" : "cubed";
+    els.mode.innerHTML = modeToggleMarkup();
+    els.mode.className = "icon mode-toggle" + (isCubed() ? " on" : "");
+    els.mode.setAttribute("aria-label", `switch to ${targetMode === "cubed" ? "flipple cubed" : "normal flipple"}`);
+  }
+
+  if (els.settingsButton) {
+    els.settingsButton.innerHTML = gearIcon("mini-svg gear-svg");
+  }
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 async function loadDaily() {
@@ -850,9 +974,54 @@ function desiredMusicVolume() {
   return isSoundMuted() ? 0 : clamp(state.settings.musicVolume, 0, 1);
 }
 
+<<<<<<< HEAD
 function unlockAudioFromGesture() {
   if (music.unlocked) return;
   music.unlocked = true;
+=======
+function primeTrackCache() {
+  Object.keys(APP.audio.tracks).forEach((key) => {
+    if (music.preloadedKeys.has(key)) return;
+    music.preloadedKeys.add(key);
+
+    const audio = new Audio(APP.audio.tracks[key]);
+    audio.preload = "auto";
+    audio.load();
+  });
+}
+
+function prepareAudioAtOffset(audio, seconds) {
+  return new Promise((resolve) => {
+    const applyTime = () => {
+      try {
+        const duration = audio.duration;
+        if (Number.isFinite(duration) && duration > 0) {
+          audio.currentTime = seconds % duration;
+        } else if (seconds > 0) {
+          audio.currentTime = seconds;
+        }
+      } catch {
+        // Some browsers briefly reject currentTime until metadata is ready.
+      }
+
+      resolve();
+    };
+
+    if (audio.readyState >= 1) {
+      applyTime();
+      return;
+    }
+
+    audio.addEventListener("loadedmetadata", applyTime, { once: true });
+    audio.load();
+  });
+}
+
+function unlockAudioFromGesture() {
+  if (music.unlocked) return;
+  music.unlocked = true;
+  primeTrackCache();
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   updateMusicForContext({ fade: false });
 }
 
@@ -950,6 +1119,7 @@ function makeMusicAudio(key) {
 }
 
 function setMusicStartTime(audio, seconds) {
+<<<<<<< HEAD
   const applyTime = () => {
     try {
       const duration = audio.duration;
@@ -965,12 +1135,16 @@ function setMusicStartTime(audio, seconds) {
 
   if (audio.readyState >= 1) applyTime();
   else audio.addEventListener("loadedmetadata", applyTime, { once: true });
+=======
+  prepareAudioAtOffset(audio, seconds);
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 function startCrossfade(previous, next, offset, targetVolume, fade) {
   clearMusicFade();
   clearLoopTimer();
 
+<<<<<<< HEAD
   next.volume = fade && previous ? 0 : targetVolume;
   setMusicStartTime(next, offset);
 
@@ -1002,6 +1176,42 @@ function startCrossfade(previous, next, offset, targetVolume, fade) {
       scheduleLoopFade();
     }
   }, 30);
+=======
+  const kickOff = () => {
+    next.volume = fade && previous ? 0 : targetVolume;
+
+    next.play().catch(() => {
+      music.pendingTrackChange = true;
+    });
+
+    if (!previous || !fade) {
+      if (previous) stopAudio(previous);
+      scheduleLoopFade();
+      return;
+    }
+
+    const start = performance.now();
+    const fromStartVolume = previous.volume;
+    const duration = APP.audio.fadeMs;
+
+    music.fadeTimer = setInterval(() => {
+      const progress = clamp((performance.now() - start) / duration, 0, 1);
+      const eased = progress * progress * (3 - 2 * progress);
+
+      previous.volume = fromStartVolume * (1 - eased);
+      next.volume = targetVolume * eased;
+
+      if (progress >= 1) {
+        clearMusicFade();
+        stopAudio(previous);
+        next.volume = targetVolume;
+        scheduleLoopFade();
+      }
+    }, 30);
+  };
+
+  prepareAudioAtOffset(next, offset).then(kickOff);
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
 }
 
 function stopAudio(audio) {
@@ -1066,7 +1276,11 @@ function openModal(type) {
   state.activeModal = type;
   state.lastFocus = document.activeElement;
 
+<<<<<<< HEAD
   els.modalTitle.textContent = type === "settings" ? "Settings" : "Help";
+=======
+  els.modalTitle.textContent = type === "settings" ? "settings" : "help";
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
   els.modalBody.innerHTML = type === "settings" ? settingsMarkup() : helpMarkup();
   els.modalBackdrop.hidden = false;
   document.body.classList.add("modal-open");
@@ -1092,7 +1306,12 @@ function settingsMarkup() {
   return `
     <section class="modal-section">
       <h3>soundtrack</h3>
+<<<<<<< HEAD
       <p>The music changes with theme and mode. Switching modes crossfades at the same timestamp when the browser allows it.</p>
+=======
+      <p>The music changes with theme and mode. The four tracks are original and handmade by crazywaffleguy.</p>
+      <p>When the browser cooperates, theme and mode changes crossfade at the same timestamp so the soundtrack stays smooth instead of jumping.</p>
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
       <label class="volume-setting" for="musicVolumeSlider">
         <span>music volume</span>
         <input class="music-slider" id="musicVolumeSlider" type="range" min="0" max="100" value="${volume}" />
@@ -1102,8 +1321,21 @@ function settingsMarkup() {
 
     <section class="modal-section coming-soon">
       <h3>later switches</h3>
+<<<<<<< HEAD
       <div class="future-setting"><span class="tiny-switch off"></span><span>haptic feedback</span><em>coming later</em></div>
       <div class="future-setting"><span class="tiny-switch off"></span><span>sound effects</span><em>coming later</em></div>
+=======
+      <div class="future-setting">
+        <span class="future-switch-visual off" aria-hidden="true"></span>
+        <span>haptic feedback</span>
+        <em>coming later</em>
+      </div>
+      <div class="future-setting">
+        <span class="future-switch-visual off" aria-hidden="true"></span>
+        <span>sound effects</span>
+        <em>coming later</em>
+      </div>
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
     </section>
   `;
 }
@@ -1127,14 +1359,23 @@ function updateSettingsVolumeUI() {
 function helpMarkup() {
   return `
     <section class="modal-section intro-section">
+<<<<<<< HEAD
       <p>Flipple is a daily code-breaking puzzle. Flip the pattern, press the check, then use the score to narrow down the hidden answer.</p>
+=======
+      <p>flipple is a daily code-breaking puzzle. Flip the pattern, press the check, then use the score to narrow down the hidden answer.</p>
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
     </section>
 
     <section class="modal-section">
       <h3>icons around the board</h3>
       <div class="help-row"><span class="help-visual">${crownIcon()}</span><p><b>crown</b> is your local wins for the current mode.</p></div>
+<<<<<<< HEAD
       <div class="help-row"><span class="help-visual mini-mode">II / III</span><p><b>mode</b> swaps between normal Flipple and Flipple³.</p></div>
       <div class="help-row"><span class="help-visual">${moonIcon()}</span><p><b>theme</b> swaps light and dark mode.</p></div>
+=======
+      <div class="help-row"><span class="help-visual">${modeHelpVisualMarkup()}</span><p><b>mode</b> is the top-right mode toggle. It shows the mode you will switch into next.</p></div>
+      <div class="help-row"><span class="help-visual">${themeHelpVisualMarkup()}</span><p><b>theme</b> is the light/dark toggle. It shows the theme you will switch into next.</p></div>
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
       <div class="help-row"><span class="help-visual bulb-pair">${bulbMarkup(false)}${bulbMarkup(true)}</span><p><b>lightbulbs</b> show your 6 turns. Each guess dims one bulb.</p></div>
     </section>
 
@@ -1149,8 +1390,18 @@ function helpMarkup() {
 
     <section class="modal-section">
       <h3>gameplay modes</h3>
+<<<<<<< HEAD
       <div class="help-row"><span class="help-switch"></span><p><b>normal</b> uses two-position switches.</p></div>
       <div class="help-row"><span class="help-dial">${wheelMarkup()}</span><p><b>flipple³</b> uses rotating three-position propellers. Same goal, one extra state.</p></div>
+=======
+      <div class="help-row"><span class="help-visual">${helpSwitchVisualMarkup()}</span><p><b>normal</b> uses two-position switches.</p></div>
+      <div class="help-row"><span class="help-visual">${helpDialVisualMarkup()}</span><p><b>flipple³</b> uses rotating three-position propellers. Same goal, one extra state.</p></div>
+    </section>
+
+    <section class="modal-section">
+      <h3>soundtrack</h3>
+      <p>flipple has a full in-game soundtrack throughout the experience. Each theme and mode has its own track, and all music was made by crazywaffleguy.</p>
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
     </section>
 
     <section class="modal-section">
@@ -1159,7 +1410,11 @@ function helpMarkup() {
     </section>
 
     <footer class="modal-footnote">
+<<<<<<< HEAD
       Flipple by crazywaffleguy. Source, notes, and project info live on <a href="https://github.com/crazywaffleguy/flipple" target="_blank" rel="noopener noreferrer">GitHub</a>.
+=======
+      flipple by crazywaffleguy. Source, notes, and project info live on <a href="https://github.com/crazywaffleguy/flipple" target="_blank" rel="noopener noreferrer">GitHub</a>.
+>>>>>>> 70ebdac (Release Flipple v0.3.1 Visual and audio fixes)
     </footer>
   `;
 }
@@ -1240,6 +1495,7 @@ els.submit.addEventListener("click", submitGuess);
 els.reset.addEventListener("click", restartPractice);
 els.theme.addEventListener("click", toggleTheme);
 els.mode.addEventListener("click", toggleMode);
+els.mode.addEventListener("mouseenter", animateModeTogglePreview);
 els.share.addEventListener("click", shareResult);
 els.practice.addEventListener("click", () => startPractice({ slide: "right" }));
 els.dailyMeta.addEventListener("click", returnToDaily);
