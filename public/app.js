@@ -248,8 +248,8 @@ function gearIcon(className = "") {
 function speakerIcon(isMuted, className = "") {
   const mark = isMuted
     ? `
-      <line class="speaker-mark" x1="16.5" y1="8" x2="21.3" y2="12.8"></line>
-      <line class="speaker-mark" x1="21.3" y1="8" x2="16.5" y2="12.8"></line>
+      <line class="speaker-mark" x1="17" y1="9.75" x2="21.2" y2="13.95"></line>
+      <line class="speaker-mark" x1="21.2" y1="9.75" x2="17" y2="13.95"></line>
     `
     : `
       <path class="speaker-wave speaker-wave-inner" d="M16.7 9.2c.75.75 1.15 1.7 1.15 2.8s-.4 2.05-1.15 2.8"></path>
@@ -365,8 +365,9 @@ function applyShell() {
   }
 
   if (els.settingsButton) {
-    els.settingsButton.textContent = "[*]";
+    els.settingsButton.replaceChildren(document.createTextNode("[*]"));
     els.settingsButton.classList.add("ascii-settings");
+    els.settingsButton.setAttribute("aria-label", "open settings");
   }
 }
 
@@ -381,7 +382,59 @@ async function loadDaily() {
     state.daily = fallbackDaily(mode);
   }
 
+  if (!isValidPattern(state.daily?.pattern, modeConfig().states)) {
+    state.daily = fallbackDaily(mode);
+  }
+
   state.secret = [...state.daily.pattern];
+}
+
+function isValidPattern(pattern, states = statesForMode()) {
+  return Array.isArray(pattern)
+    && pattern.length === APP.length
+    && pattern.every((value) => Number.isInteger(value) && value >= 0 && value < states);
+}
+
+function normalizeGuessEntry(entry) {
+  if (!entry || !isValidPattern(entry.pattern)) return null;
+
+  const pattern = [...entry.pattern];
+  const score = Number.isInteger(entry.score)
+    ? clamp(entry.score, 0, APP.length)
+    : sameCount(pattern, state.secret);
+
+  return { pattern, score };
+}
+
+function normalizeSavedResult(saved) {
+  if (!saved || typeof saved !== "object" || !Array.isArray(saved.guesses)) return null;
+
+  const guesses = saved.guesses.map(normalizeGuessEntry);
+  if (guesses.some((entry) => entry === null)) return null;
+  if (guesses.length < 1 || guesses.length > APP.maxGuesses) return null;
+
+  const finalGuess = guesses.at(-1);
+  const won = finalGuess.score === APP.length;
+  const complete = won || guesses.length === APP.maxGuesses;
+  if (!complete) return null;
+
+  return {
+    ...saved,
+    won,
+    shared: Boolean(saved.shared),
+    guesses
+  };
+}
+
+function discardSavedDailyResult() {
+  if (!state.daily?.date) return;
+
+  const stats = loadStats();
+  const modeStats = stats[state.settings.mode];
+  if (!modeStats?.results?.[state.daily.date]) return;
+
+  delete modeStats.results[state.daily.date];
+  saveStats(stats);
 }
 
 function startFreshBoard() {
@@ -403,8 +456,14 @@ async function startDaily(options = {}) {
   await loadDaily();
 
   const saved = getSavedDailyResult();
-  if (saved) restoreSavedResult(saved);
-  else startFreshBoard();
+  const normalized = normalizeSavedResult(saved);
+
+  if (normalized) {
+    restoreSavedResult(normalized);
+  } else {
+    if (saved) discardSavedDailyResult();
+    startFreshBoard();
+  }
 
   render();
 }
@@ -432,7 +491,8 @@ function restoreSavedResult(saved) {
   state.over = true;
   state.won = Boolean(saved.won);
   state.shared = Boolean(saved.shared);
-  state.current = state.guesses.at(-1)?.pattern || Array(APP.length).fill(0);
+  const lastPattern = state.guesses.at(-1)?.pattern;
+  state.current = isValidPattern(lastPattern) ? [...lastPattern] : Array(APP.length).fill(0);
   state.rotations = Array(APP.length).fill(0);
   resetShareLabel();
 
@@ -609,6 +669,8 @@ function drawPattern(pattern) {
   const mini = document.createElement("div");
   mini.className = "mini";
 
+  if (!isValidPattern(pattern)) return mini;
+
   pattern.forEach((value) => {
     const bit = document.createElement("div");
     bit.className = "bit";
@@ -649,6 +711,14 @@ function wheelMarkup() {
 // Submit the current pattern and end the session when solved or out of guesses.
 function submitGuess() {
   if (state.over) return;
+
+  if (!isValidPattern(state.current) || !isValidPattern(state.secret)) {
+    state.current = Array(APP.length).fill(0);
+    state.rotations = Array(APP.length).fill(0);
+    if (!isValidPattern(state.secret)) state.secret = randomPattern();
+    render();
+    return;
+  }
 
   const pattern = [...state.current];
   const score = sameCount(pattern, state.secret);

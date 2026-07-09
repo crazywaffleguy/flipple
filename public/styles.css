@@ -308,10 +308,11 @@ body[data-hard="true"] .cube {
 }
 
 .ascii-settings {
-  font-size: calc(var(--ui-size) * .72);
-  letter-spacing: -.08em;
+  font-size: calc(var(--ui-size) * .82);
+  letter-spacing: -.12em;
   font-weight: var(--control-weight);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  transform: translateY(-1px);
 }
 
 .tries {
@@ -1215,6 +1216,10 @@ body[data-hard="true"] .cube {
 .speaker-icon .speaker-mark {
   fill: none;
   stroke: currentColor;
+}
+
+.speaker-icon .speaker-mark {
+  stroke-width: 1.9;
 }
 
 .mini-svg {

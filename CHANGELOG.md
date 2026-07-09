@@ -2,12 +2,17 @@
 
 ## 0.3.2 hotfix
 
+- Added saved-result validation so corrupted local daily results can no longer reload into a blank board with empty guess rows.
+- Corrupted saved results for the current day are now discarded automatically and replaced with a fresh playable board.
+- Added a defensive submit guard so an empty or invalid board cannot save more broken `0/5` rows.
 - Fixed a broken mode hover listener that stopped the app from finishing startup, leaving the board blank and preventing help/share/practice/audio buttons from working.
 - Replaced the experimental animated top-right controls with stable static mode/theme controls.
 - Reworked the settings icon into a simple ASCII-style control.
 - Resized and corrected the mode selector switch and propeller icons.
 - Rewrote `package.json` as strict valid JSON so Vercel can build again.
 - Bumped only the service worker cache name so the fix is not held back by PWA caching.
+- Centered the muted speaker `x` and tightened the speaker mark styling.
+- Made the settings control more stable by forcing the simple ASCII `[*]` icon and cleaning its alignment.
 
 ## 0.3.2
 

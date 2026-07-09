@@ -41,7 +41,7 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 **status:** tuned in v0.3.2.
 
 
-## case #3 - blank board after v0.3.2
+## case #4 - blank board after v0.3.2
 
 **header:** blank board / buttons do nothing  
 **symptom:** the page could load with only the play box, submit button, streak, help icon, title, and footer labels. Mode/theme clicks could partially wake the UI, but help, share, practice, and audio controls did not behave correctly.
@@ -52,7 +52,7 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 
 **status:** fixed in the v0.3.2 UI/audio hotfix.
 
-## case #4 - Vercel package JSON parse failure
+## case #5 - Vercel package JSON parse failure
 
 **header:** production deploy failed before build  
 **symptom:** Vercel reported `/vercel/path0/package.json: Expected double-quoted property name in JSON at position 23`.
@@ -62,3 +62,27 @@ A mostly unserious but potentially useful record of confusing moments, bugs, and
 **resolution:** rewrote `package.json` as strict valid JSON and checked it with `python3 -m json.tool`.
 
 **status:** fixed in the v0.3.2 UI/audio hotfix.
+
+
+## case #6 - the haunted save file
+
+**header:** blank board survived the first hotfix  
+**symptom:** after the site was deployed successfully, the game could still reopen to a blank play box with only the submit button, streak, help icon, and footer labels. Pressing submit added empty `0/5` rows instead of real guesses.
+
+**cause:** the browser had a corrupted local daily result saved from the broken build. The app trusted that saved result, restored an empty `pattern: []`, and then kept playing from that invalid empty board.
+
+**resolution:** added validation for saved daily results, pattern arrays, and submit state. Corrupted saved results for the current day are now discarded automatically and replaced with a fresh board.
+
+**status:** fixed in the v0.3.2 startup/save hotfix.
+
+
+## case #7 - the crooked speaker x
+
+**header:** the crooked speaker x  
+**symptom:** the muted speaker icon worked, but the `x` looked visually off-center. The settings icon also still looked too much like a messy gear in some stale builds.
+
+**cause:** the speaker mark coordinates were sitting too high inside the SVG, and older rendered settings markup could survive unless the button contents were force-replaced.
+
+**resolution:** centered the muted `x`, tightened its stroke, and made the Settings button force-render the ASCII-style `[*]` control.
+
+**status:** included in the v0.3.2 startup/save hotfix patch.
